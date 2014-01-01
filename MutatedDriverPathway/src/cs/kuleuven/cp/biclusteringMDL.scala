@@ -16,9 +16,11 @@ import scala.util.continuations.{cps, cpsParam}
 
 class biclusteringMDL(dupFile: String,
 						multiValuedFile: String,
+						queryFile: String,
 						rowThreshold: Int,
 						colThreshold: Int,
-						failureThreshold: Int
+						failureThreshold: Int,
+						restartThreshold: Int
 					) extends App {
    
   def execute() = {
@@ -27,6 +29,8 @@ class biclusteringMDL(dupFile: String,
 	  //   
 	  val dupMatrix = new DenseMatrix(dupFile, delimiter)
 	  val mulMatrix = new DenseMatrix(multiValuedFile, delimiter)
+	  val queryMatrix = new DenseMatrix(queryFile, delimiter)
+	  val query = (0 until queryMatrix.colSize).map(c => queryMatrix.at(1, c)).toArray
 	  //expMatrix.printMatrix
 	  val nR = dupMatrix.rowSize
 	  val nC = dupMatrix.colSize	  	  
@@ -67,7 +71,7 @@ class biclusteringMDL(dupFile: String,
 	  }
 	  
 	  println("Constructing the potential region ...")
-	  pRegion.buildPotentialRegion(cp, varRows, varCols, Array(1,2,3,4,5,6,7))	 
+	  pRegion.buildPotentialRegion(cp, varRows, varCols, query)	 
 	  println("...done")
 	  pRegion.printRegion
 	  pRegion.printDensity
@@ -89,7 +93,7 @@ class biclusteringMDL(dupFile: String,
 	    
 	  } run(failureLimit = 100)
 	  
-	  for(i <- 0 until 2) {
+	  for(i <- 0 until restartThreshold) {
 	    println("Restart " + i + "th")
 	  
 	    cp.runSubjectTo(failureLimit = failureThreshold) {
