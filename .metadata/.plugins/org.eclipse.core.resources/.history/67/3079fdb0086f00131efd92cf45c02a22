@@ -1,0 +1,143 @@
+package cs.kuleuven.cp
+
+import cs.kuleuven.graph._
+import oscar.cp.modeling._
+import oscar.cp.core._
+import cs.kuleuven.constraints.IntWSum
+import cs.kuleuven.util._
+import cs.kuleuven.java.mdl._
+import cs.kuleuven.matrix._
+import java.Math._
+
+object ws {
+
+	//val filename = "/home/thanh/Rlib/MutDriverPathways/Generators/graph_adjacency.txt"
+	//val g: UndirectedGraph = new UndirectedGraph(filename,"\t")
+  
+  /*val b = g.isConnected(2,6)
+  var rm = scala.collection.mutable.Set(3)
+  
+  val c = g.getConnectedComponent(7,rm)
+  
+  
+  val nE = 3
+  val cp = CPSolver()
+  val expGenes =  (0 until nE).map(i => CPVarBool(cp))
+  
+ 
+ 
+  
+  //var t:IndexedSeq[Int] = IndexedSeq(1,2,5,7,0,9)
+  //var r = scala.util.Random.shuffle(t).head
+  
+  var s = scala.collection.mutable.Set[scala.collection.mutable.Set[Int]]()
+  var s1 = scala.collection.mutable.Set(1,2,3,5)
+  var s2 = scala.collection.mutable.Set(5,6)
+  s.add(s1)
+  s.add(s2)
+  s1 = s1.diff(s2)
+  var l = s1
+ 	
+ */
+ /*
+ val s1 = Set(1,3,4)
+ var s2 = scala.collection.mutable.Set(s1.toSeq:_*)
+ s2.add(5)
+ println(s1)
+ println(s2)
+ 
+ var s = scala.collection.mutable.Set(1,3,5)
+ s.remove(3)
+ println(s)
+ val bestRows = Array.fill(5)(0)
+ bestRows(2) = 1
+ val b = bestRows
+ 
+ val c = (0.7*21).toInt
+ //g.getConnectedComponent(s1.head,s2)
+ */
+ val cp = CPSolver()
+ /*val w = Array(1, 1, -1)
+ val y = (0 until 3).map(i => CPVarBool(cp))
+        
+	val aux = new CPVarBool(cp)
+	val weightConstraint = new IntWSum(w, y, 2, aux)
+  //cp.post(y(0) == 1)
+  cp.post(weightConstraint)
+  cp.post(aux == 1)
+  print(y(0))
+  print(y(1))
+  print(y(2))
+  
+ val xposmax = pos.map(i => x(i).getMax)
+ val xnegmin = neg.map(i => x(i).getMin)
+ 
+ def wsum(x: Array[Int], y: Array[Int]): Int = {
+ 		var total = 0;
+ 		for(i <- 0 until x.size)
+ 			total = total + x(i)*y(i)
+ 		return total
+ }
+ 
+ val maxsum = wsum(wpos, xposmax) + wsum(wneg, xnegmin)
+ */
+ /*
+ val Cols = 0 until 20
+ val rowThreshold = 25
+ val row1 = Array(1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0)
+ val w = Cols.map(i => row1(i)*100 + rowThreshold - 100)
+ val x = (0 until 20).map(i => CPVarBool(cp))
+ val varRow = new CPVarBool(cp)
+ //cp.post(x(0) == 1)
+ val c = new IntWSum(w, x, 0, varRow)
+ cp.post(c)
+ 
+ //cp.post(rei === 1)
+ val v = varRow
+val x = (0 until 4).map(i => CPVarBool(cp))
+cp.post(x(0) )
+cp.post(x(3) )
+cp.post(!x(1))
+cp.post(!x(2))
+
+val sols = new Array[Solution](3)
+val names = List("mut", "pat", "exp")
+val s1 = new Solution(names)
+val s2 = new Solution(names)
+val s3 = new Solution(names)
+val s4 = new Solution(names)
+s1.setObjValue(1)
+s2.setObjValue(5)
+s3.setObjValue(6)
+s4.setObjValue(11)
+
+s1.update("mut", x)
+val t = s1.toString("mut", "\t")
+s1.saveVar("mut", "/home/thanh/test_saving.txt", "\t", true)
+
+sols.update(0, s1)
+sols.update(1, s2)
+sols.update(2, s3)
+
+val topK = new TopKSolutions(2)
+topK.update(s1)
+topK.update(s2)
+topK.print()
+topK.update(s3)
+topK.print()
+topK.update(s4)
+topK.print()
+*/
+
+/*	val Mutations = 0 until 10
+	val x = 0 until 10
+	val t = Mutations.map(m => 1 + x(m))
+ */
+
+
+//var t = mdl.buildDBDensityMap();
+val x = java.Math.round(1/2)
+
+  
+                               
+}

@@ -1,0 +1,489 @@
+package cs.kuleuven.java.mdl;
+
+import cs.kuleuven.matrix.* ;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Vector;
+import java.util.HashMap;
+
+public class BiclusterMDLScore implements IMDL  {
+	
+	private int modelLength;
+	private int dataLength;
+	private int mdlScore;
+	private DenseMatrix tdb;
+	private Integer[] bicColIndexes; 
+	private Integer[] bicRowIndexes; 
+	private Vector<Integer>	 bicRowDefaults;	
+	private Map<String, Integer> dbDensityMap;
+	private Map<String, Integer> bicTransDensityMap;
+	private Map<String, Integer> bicDensityMap;
+	private	int nSymbolSize;
+	private String[] symbols;
+	private String	defaultChar;
+	private String  bkgChar;
+	private Map<String, Integer> symbolMap;
+	private int base;
+	
+	public BiclusterMDLScore() {
+		dbDensityMap  = new HashMap<String, Integer>();
+		bicTransDensityMap = new HashMap<String, Integer>();	
+		bicDensityMap = new HashMap<String, Integer>();
+		bicRowDefaults= new Vector<Integer>();
+		
+		nSymbolSize = 3;
+		base = 2;
+		
+		symbols = new String[nSymbolSize];
+		symbols[0] = "-1"; 
+		symbols[1] = "0"; 
+		symbols[2] = "1";
+		
+		symbolMap = new HashMap<String, Integer>();
+		
+		defaultChar = "*";
+		bkgChar		= "0";
+		
+		for (int i = 0; i < symbols.length; i++){
+			symbolMap.put(symbols[i], i);
+		}
+	}
+	
+	public String getSymbolAt(int i) throws IllegalArgumentException {
+		if (i <0 || i >= symbols.length)
+			throw new IllegalArgumentException("Symbol index is out of range.");
+		return symbols[i];
+	}
+	
+	public Integer getSymbolIndex(String s) {
+		Integer i = symbolMap.get(s);
+		return i;
+	}
+	
+	public Integer[] getBicColIndexes() {
+		return bicColIndexes;
+	}
+
+	
+	public Integer[] getBicRowIndexes() {
+		return bicRowIndexes;
+	}
+
+	public void setBicIndexes(Integer[] rowIndexes, Integer[] colIndexes) throws Exception {		
+		this.bicRowIndexes = rowIndexes;
+		this.bicColIndexes = colIndexes;
+		
+		try {
+			int mLen = calModelLength();
+			int dLen = calDataLength();
+			setModelLength(mLen);
+			setDataLength(dLen);
+			setMDLScore(mLen + dLen);
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public int getBicRowSize() throws IllegalArgumentException {
+		if (bicRowIndexes == null)
+			throw new IllegalArgumentException("Bicluster row indexes are null");
+		return bicRowIndexes.length;
+	}
+	
+	public int getBicColSize() throws IllegalArgumentException {
+		if (bicColIndexes == null)
+			throw new IllegalArgumentException("Bicluster col indexes are null");
+		return bicColIndexes.length;
+	}
+
+	public DenseMatrix getTdb() {
+		return tdb;
+	}
+
+	public void setTdb(DenseMatrix tdb) throws Exception {
+		this.tdb = tdb;
+		try {
+			buildDBDensityMap();
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	public void setModelLength(int modelLength) {
+		this.modelLength = modelLength;
+	}
+
+	public void setDataLength(int dataLength) {
+		this.dataLength = dataLength;
+	}
+
+	public void setMDLScore(int mDLScore) {
+		this.mdlScore = mDLScore;
+	}
+	
+	public int getDataLength() {
+		return this.dataLength;
+	}
+	
+	public int getModelLength() {
+		return this.modelLength;
+	}
+	
+	public int getMDLScore() {
+		return this.mdlScore;
+	}
+			
+	public double log(double x, int base) {
+		return Math.log(x)/Math.log(base);
+	}
+	
+	public int getDBDensityMapSize() {
+		return dbDensityMap.size();
+	}
+	
+	public int getBicTransDensityMapSize() {
+		return bicTransDensityMap.size();
+	}
+	
+	public void setBicRowDefaults(Vector<Integer> bicRowDefaults) {
+		this.bicRowDefaults = bicRowDefaults;
+	}
+
+	
+	public void checkInit() throws IllegalArgumentException{
+		
+		if ((this.bicRowIndexes == null) || 
+				(this.bicColIndexes == null) ||
+				(this.bicRowIndexes.length <= 0) ||
+				(this.bicColIndexes.length <= 0)) {
+			throw new IllegalArgumentException("Bicluster has not been initialized.");
+		}
+		
+		if( this.getTdb() == null) {
+			throw new IllegalArgumentException("Transaction database has not been initialized.");
+		}
+	}
+	
+	private void buildDBDensityMap() {
+		
+		int[] dens = new int[symbols.length]; // default value is 0
+				
+		for (int i = 0; i< getTdb().rowSize(); i++) {
+			for (int j = 0; j < getTdb().colSize(); j++) {
+				int v = tdb.at(i, j);
+				int index = symbolMap.get(Integer.toString(v));
+				dens[index]++;
+			}
+		}
+		
+		dbDensityMap.clear();
+		for (int i = 0; i < symbols.length; i++){
+			dbDensityMap.put(symbols[i], dens[i]);
+		}
+		
+	}
+	
+	private Vector<Integer> getBicRowDefaults() throws Exception {
+		try {
+			checkInit();
+		}catch (IllegalArgumentException ex){
+			throw ex;
+		}
+		
+		int nBicRows = 0;
+		
+		try {
+			nBicRows = this.getBicRowSize();
+		} catch(Exception ex) {
+			throw ex;
+		}
+		
+		// Row default cannot be the background char. 
+		// Hence we only consider (nSymbolSize - 1) chars
+		int[][] rowDens = new int[nBicRows][this.nSymbolSize];
+
+		int nCol = 0;
+		if (this.getBicColSize() > 10)
+			nCol = 10;
+		else 
+			nCol = this.getBicColSize();
+		
+		for(int i=0; i < nBicRows; i++ ) {
+			int row = bicRowIndexes[i];
+			for(int j = 0; j < nCol; j++) {
+				int col = bicColIndexes[j];
+				int v	= tdb.at(row, col);
+				int index = symbolMap.get(Integer.toString(v));
+				rowDens[i][index]++;
+			}
+		}
+		
+		// Determine row defaults
+		bicRowDefaults.clear();
+		int bkgCharIndex = symbolMap.get(bkgChar);
+		for(int i = 0; i < bicRowIndexes.length; i++) {
+			int value = -1;//rowDens[i][0];
+			int index = -1;
+			for(int j = 0; j < this.nSymbolSize; j++) {
+				if ((j != bkgCharIndex) && (rowDens[i][j] > value)) {
+					value = rowDens[i][j];
+					index = j;
+				}
+			}
+			String sym = "";
+			try {
+				sym = this.getSymbolAt(index);
+			} catch (IllegalArgumentException ex) {
+				throw ex;
+			}
+			bicRowDefaults.add(Integer.parseInt(sym));
+		}
+		
+		System.out.println(bicRowDefaults);
+		return bicRowDefaults;
+		
+	}
+	
+	private void buildBicDensityMaps() throws Exception {
+		try {
+			checkInit();
+		}catch (IllegalArgumentException ex){
+			throw ex;
+		}
+		// Density of the default character is stored at the end of the list
+		int[] transDens = new int[symbols.length + 1];
+		int[] dens = new int[symbols.length];
+		int nBicRows = 0;
+		int nBicCols = 0;
+		Vector<Integer> defaults;
+		
+		try {
+			nBicRows = this.getBicRowSize();
+			nBicCols = this.getBicColSize();
+			defaults = this.getBicRowDefaults();
+		} catch(Exception ex) {
+			throw ex;
+		}
+		
+		for(int i = 0; i < nBicRows; i++) {
+			int rowDefault = defaults.get(i).intValue();
+			for(int j = 0; j < nBicCols; j++) {
+				int v = tdb.at(this.bicRowIndexes[i], this.bicColIndexes[j]);
+				int index = symbolMap.get(Integer.toString(v));
+				// calculate densities for the original bicluster
+				dens[index]++;
+				// calculate densities for the transformed bicluster
+				if (v == rowDefault) {
+					transDens[symbols.length]++;
+				} else {					
+					transDens[index]++;
+				}
+			}
+		}
+		
+		bicTransDensityMap.clear();
+		bicDensityMap.clear();
+		for (int i = 0; i < symbols.length; i++){
+			bicTransDensityMap.put(symbols[i], transDens[i]);
+			bicDensityMap.put(symbols[i], dens[i]);
+		}
+		bicTransDensityMap.put(defaultChar, transDens[symbols.length]);		
+	}
+	
+	private int calModelLength() throws Exception {
+		int nBicRows = 0;
+		int nBicCols = 0;
+		
+		try {
+			nBicRows = this.getBicRowSize();
+			nBicCols = this.getBicColSize();
+		} catch (IllegalArgumentException ex) {
+			throw ex;
+		}
+		
+		if (nBicRows <= 0 || nBicCols <= 0) {
+			throw new IllegalArgumentException("Bicluster has not been initialized.");
+		}
+		
+		if( this.getTdb() == null) {
+			throw new IllegalArgumentException("Transaction database has not been initialized.");
+		}
+		
+		int bicArea  = nBicRows * nBicCols;
+		int nDBRows  = this.getTdb().rowSize();
+		int nDBCols  = this.getTdb().colSize();
+		int dbSize	 = nDBRows * nDBCols;
+		 
+		double mLen = 0.0;
+		try {
+			mLen = (1 + nBicRows)*log(nDBRows, base) + 
+					(1 + nBicCols)*log(nDBCols, base) +
+					(nSymbolSize) * log(bicArea, base); // number of bits for encoding data density inside the bicluster
+			if (dbSize > bicArea) {
+				// mLen = mLen + (nSymbolSize - 1)*log(bicArea, base);
+				mLen = mLen + (nSymbolSize)*log(dbSize - bicArea, base);
+			}
+		} catch(Exception ex){
+			throw new IllegalArgumentException("Illegal arguments when calculating model length");
+		}
+				
+		return (int)mLen;
+	}
+	
+	private int calDataLength() throws Exception {
+				
+		if( this.getTdb() == null) {
+			throw new IllegalArgumentException("Transaction database has not been initialized.");
+		}
+					
+		int len1 = 0;
+		int len2 = 0;
+		
+		try {
+			getBicRowDefaults();
+			buildBicDensityMaps();
+			len1 = calDataLengthInsideBic();			
+			len2 = calDataLengthOutsideBic();
+			//System.out.println("Data length inside the bicluster = " + Integer.toString(len1));
+			//System.out.println("Data length outside the bicluster = " + Integer.toString(len2));
+		}catch(Exception ex) {
+			throw ex;
+		}
+		
+		return (len1 + len2);
+	}
+	
+	/**
+	 * L(D^B) = klog|sigma+| + sum_{s \in sigma'}
+	 * @return
+	 */
+	
+	private int calDataLengthInsideBic() {
+		int nBicRows = 0;
+		int nBicCols = 0;
+		
+		try {
+			nBicRows = this.getBicRowSize();
+			nBicCols = this.getBicColSize();
+		} catch (IllegalArgumentException ex) {
+			throw ex;
+		}
+		
+		if (nBicRows <= 0 || nBicCols <= 0) {
+			throw new IllegalArgumentException("Bicluster has not been initialized.");
+		}
+		
+		if( this.getTdb() == null) {
+			throw new IllegalArgumentException("Transaction database has not been initialized.");
+		}
+		
+		int bicArea  = nBicRows * nBicCols;
+		//int nDBRows  = this.getTdb().rowSize();
+		//int nDBCols  = this.getTdb().colSize();
+		//int dbSize	 = nDBRows * nDBCols;
+		
+		float len = 0;
+		Object[] keys = bicTransDensityMap.keySet().toArray();
+		
+		for(int i = 0; i < keys.length; i++ ) {
+			int n = bicTransDensityMap.get(keys[i].toString());
+			if (n > 0) {
+				len += n*log(bicArea*1.0/n, base);
+			}
+		}
+		
+		len += nBicRows*log(symbols.length - 1, base);
+		
+		return (int)len;
+	}
+	
+	private int calDataLengthOutsideBic() {
+		int nBicRows = 0;
+		int nBicCols = 0;
+		
+		try {
+			nBicRows = this.getBicRowSize();
+			nBicCols = this.getBicColSize();
+		} catch (IllegalArgumentException ex) {
+			throw ex;
+		}
+		
+		if (nBicRows <= 0 || nBicCols <= 0) {
+			throw new IllegalArgumentException("Bicluster has not been initialized.");
+		}
+		
+		if( this.getTdb() == null) {
+			throw new IllegalArgumentException("Transaction database has not been initialized.");
+		}
+		
+		int bicArea  = nBicRows * nBicCols;
+		int nDBRows  = this.getTdb().rowSize();
+		int nDBCols  = this.getTdb().colSize();
+		int dbSize	 = nDBRows * nDBCols;
+		int remain	 = dbSize - bicArea;
+		
+		float len = 0;
+		Object[] keys = dbDensityMap.keySet().toArray();
+		
+		for(int i = 0; i < keys.length; i++) {
+			String sym = keys[i].toString();
+			int nSym = dbDensityMap.get(sym) - bicDensityMap.get(sym);
+			if (nSym > 0)
+				len += nSym*log(remain*1.0/nSym, base);
+		}
+		
+		return (int)len;
+		
+	}
+	
+	/**
+	 * getNextCompressedCol() determines the best column 
+	 * (according to MDL scores) to be added to the current bi-cluster.
+	 * @return
+	 * @throws Exception
+	 */
+	public int getNextCompressedCol() throws Exception {
+		int col = -1;
+		
+		try {
+			checkInit();
+		}catch(Exception ex) {
+			throw ex;
+		}
+		
+		HashSet<Integer> bicColSet = new HashSet<Integer>();
+		HashSet<Integer> dbColSet = new HashSet<Integer>();
+		HashSet<Integer> candCols = new HashSet<Integer>();
+		for(int i = 0; i< this.bicColIndexes.length; i++) 
+			bicColSet.add(bicColIndexes[i]);
+		for(int i=0; i < this.getTdb().colSize(); i++)
+			dbColSet.add(i);
+		
+		candCols.addAll(dbColSet);
+		candCols.removeAll(bicColSet);
+		java.util.Iterator<Integer> iter = candCols.iterator();
+		while (iter.hasNext()) {
+			Integer c = (Integer) iter.next();
+			System.out.println(c);
+		}
+		
+		
+		return col;
+	}
+	
+	public void printBicDensityMaps() {
+		Object[] keys = bicTransDensityMap.keySet().toArray();				
+		System.out.println("Tranformed bicluster densities:");
+		for(int i = 0; i < keys.length; i++) {
+			System.out.println(keys[i].toString() +": " + bicTransDensityMap.get(keys[i].toString()));
+		}
+		
+		// Original bicluster
+		Object[] keys2 = bicDensityMap.keySet().toArray();
+		System.out.println("Bicluster densities:");
+		for(int i = 0; i < keys2.length; i++) {
+			System.out.println(keys2[i].toString() +": " + bicDensityMap.get(keys2[i].toString()));
+		}
+	}
+
+}

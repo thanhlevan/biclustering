@@ -1,0 +1,71 @@
+package cs.kuleuven.util
+
+import cs.kuleuven.matrix.DenseMatrix
+import oscar.cp.core._
+
+/**
+ * Created on December 27, 2013 
+ * @author thanhle
+ */
+
+/**
+ * 
+ */
+class PotentialRegion(binTdb: DenseMatrix) {
+	
+	val region 	 = new Array[Array[Int]](2)
+	val density	 = new Array[Double](binTdb.colSize)
+	  		
+	def update(rows: IndexedSeq[CPVarBool], 
+						cols:IndexedSeq[CPVarBool]) = {
+		
+		val posCols = (0 until cols.size).filter(c => (cols(c).isBound && cols(c).getValue == 1))
+		val posRows = (0 until rows.size).filter(r => !(rows(r).isBound && rows(r).getValue == 0))
+		val colDens = (0 until posCols.size).map(c => 1.0*colSum(c, posRows.toArray, binTdb)/posRows.length)
+		
+		region.update(0, posRows.toArray)
+		region.update(1, posCols.toArray)
+		
+		for(c <- 0 until posCols.length) {
+			density.update(posCols(c), colDens(c))
+		}
+		
+		for(c <- 0 until binTdb.colSize) {
+		  if(!posCols.contains(c))
+		    density.update(c, 0.0)
+		} 
+		
+	}
+	
+	def colSum(col: Int, rows: Array[Int], binTdb: DenseMatrix): Int = {
+  	  var total = 0
+  	  for(row <- rows) {
+  	    total += binTdb.at(row, col)
+  	  }
+  	  return total
+  	}
+  	
+  	def printRegion() = {
+  	  val posCols = region(1)
+  	  val posRows = region(0)
+  	  
+  	  print("Columns: ")  	  
+  	  for (c <- posCols) {
+  	    print(c + " ")
+  	  }
+  	  println(" [" + posCols.length + "]")
+  	  print("Rows: ")
+  	  for ( r <- posRows) {
+  	    print( r + " ")
+  	  }
+  	  println(" [" + posRows.length + "]")    	 
+  	}
+  	
+  	def printDensity() = {
+  	  print("Density: ")
+  	  for(c <- 0 until binTdb.colSize){
+  	    println(c + ": " + density(c) )  	    
+  	  }
+  	}
+  	  		
+}

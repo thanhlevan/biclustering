@@ -1,0 +1,15 @@
+import cs.kuleuven.cp.biclusteringMDL;
+
+import org.apache.commons.cli.*;
+
+/**
+ * Created on December 27, 2013
+ * @author thanhle
+ *
+ */
+public class runBiclusteringMDL {
+
+	public static void main(String[] args) {
+		
+	}
+}

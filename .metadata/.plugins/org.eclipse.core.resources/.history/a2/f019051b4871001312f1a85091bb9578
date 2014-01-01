@@ -1,0 +1,239 @@
+package cs.kuleuven.cp
+
+/** 
+ *  December 23rd, 2013
+ */
+
+import cs.kuleuven.java.mdl._
+import cs.kuleuven.matrix._
+import cs.kuleuven.constraints.IntWSum
+import cs.kuleuven.java.mdl.BiclusterMDLScore
+import cs.kuleuven.util.PotentialRegion
+import oscar.cp.modeling._
+import oscar.cp.core._
+import breeze.stats.distributions.Bernoulli
+
+object biclusteringMDL  {
+  
+  
+  
+  def execute() = {
+	
+	  val delimiter = "\t"
+	  val dupFile = "D:\\repos\\data\\biclusters\\8modules\\noise_10\\dup_bg_0.10_bic_0.10_8modules.txt"
+	  val multiValuedFile = "D:\\repos\\data\\biclusters\\8modules\\noise_10\\bg_0.10_bic_0.10_8modules.txt"
+	  //   
+	  val dupMatrix = new DenseMatrix(dupFile, delimiter)
+	  val mulMatrix = new DenseMatrix(multiValuedFile, delimiter)
+	  //expMatrix.printMatrix
+	  val nR = dupMatrix.rowSize
+	  val nC = dupMatrix.colSize	  	  
+	  //parameters
+	  val rowThreshold = 25
+	  val colThreshold = 25	    
+	  //
+	  val Rows = 0 until nR
+	  val Cols	= 0 until nC	  	  
+	  //decision variables
+	  val cp = CPSolver()
+	  val varRows =  Rows.map(i => CPVarBool(cp))
+	  val varCols =  Cols.map(i => CPVarBool(cp))
+	  val bestRows = Array.fill(nR)(0)
+	  val bestCols = Array.fill(nC)(0)
+	  // MDL
+	  val mdl = new BiclusterMDLScore() 
+      mdl.setTdb(mulMatrix);
+	  //Randomizer
+	  val rand = new scala.util.Random(0)
+	  var bRegionBuilt = false
+	  val pRegion = new PotentialRegion(dupMatrix)
+	  //optimization criterion
+	  val biclusterArea = sum((0 until nR).map(r => varRows(r))) * sum((0 until nC).map(c => varCols(c))) 
+	  
+	  cp.maximize(biclusterArea)  subjectTo {
+	    
+		// 1.Noise constraints on rows
+	    for(r <- Rows) {
+	      val rWeight = (0 until nC).map(c => (100*dupMatrix.at(r,c) + rowThreshold - 100))	      
+	      val coverageConstraint = new IntWSum(rWeight, varCols, 0, varRows(r))
+	      cp.add(coverageConstraint)	      
+	    }
+	
+	    //2.Noise constraints on columns
+	    for(c <- Cols) {
+	      //val colSum = sum((0 until nR).map(r => varRows(r) * (100*dupMatrix.at(r,c) + colThreshold - 100) ))
+	      //cp.add(varCols(c) ==> (colSum >== 0))
+	      val cWeight = (0 until nR).map(r => (100*dupMatrix.at(r,c) + colThreshold - 100))
+	      val aux = new CPVarBool(cp)
+	      val colNoiseConstraint = new IntWSum(cWeight, varRows, 0, aux)
+	      cp.add(varCols(c) ==> aux)
+	    }
+	  }
+	  
+	  buildPotentialRegion(cp, varRows, varCols, mdl, dupMatrix, pRegion, Array(1,2,3,4,5,6,7))
+	  pRegion.update(varRows, varCols)
+	  
+	  println("Finish constructing the potential region.")
+	  pRegion.printRegion
+	  pRegion.printDensity
+	 
+	  
+	  cp.runSubjectTo(failureLimit = 100) {
+	    val outCols = pRegion.getOutsideCols
+	    val posCols = pRegion.getPosCols	    
+	    val colRangeLimit = (0.8*posCols.length).toInt
+	    
+	    for(c <- outCols) {
+	      cp.post( varCols(c) == 0)
+	    }
+	    
+	    for(c <- posCols){
+		    if(rand.nextInt(posCols.length) < colRangeLimit)
+		      cp.post(varCols(c) == 1)
+		}
+	  }
+	  
+	  /*exploration {
+	    if(!bRegionBuilt) {
+	    	buildPotentialRegion(cp, varRows, varCols, mdl, dupMatrix, pRegion, Array(1,2,3,4,5,6,7))
+	    	pRegion.update(varRows, varCols)
+	    	bRegionBuilt = true
+	    	
+	    	println("Finish constructing the potential region.")
+	    	pRegion.printRegion
+	    	pRegion.printDensity
+	    	println("Restart ....")
+	    	cp.run(0)
+	    } else {
+	    	println("Restart here")
+	    	
+	    	while(!allBounds(varCols)){
+	    		val outCols = pRegion.getOutsideCols//.map(c => varCols(c))
+	    		val unBoundedOutCols = outCols.filter(c => !varCols(c).isBound)
+	    		val unBoundedCols = (0 until varCols.length).filter(c => !varCols(c).isBound)	    		
+	    		if (unBoundedOutCols.length > 0) {
+	    		  println("unboundedOutCols:" + unBoundedOutCols.length + " - allCols: " +unBoundedCols.length)
+	    		  val col = unBoundedOutCols.head
+	    		  println(col)
+	    		  cp.branch {cp.post(varCols(col) == 0)} {cp.post(varCols(col) == 1)}
+	    		} else {
+	    		  //cp.exploration {
+	    		  val unBoundedCols = pRegion.getPosCols.filter(c => !varCols(c).isBound)	    		  
+	    		  val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)
+	    		  val col = sortedDenCols.head
+	    		  val bernouli = new Bernoulli(pRegion.getColDensity(col))
+	    		  val value1 = if (bernouli.sample) 1 else 0
+	    		  val value2 = if (value1 == 1) 0 else 1
+	    		  println("col " + col + ": " + value1 + " - " + value2 + " - nBacktrack: " + cp.bkts)
+	    		  
+	    		  cp.branch {cp.post(varCols(col) == value1)} {cp.post(varCols(col) == value2)}
+	    		  //} run(1, 500)
+	    		} 
+	    	}
+	    }	
+	    //printSolution(varRows, varCols)
+	    //store the current best solution 
+	    //Rows.foreac/h(r => bestRows(r) = varRows(r).value)
+	    //Cols.foreach(c => bestCols(c) = varCols(c).value)
+	  } run(1, 500)*/
+  }
+  
+  
+    
+    def main(args: Array[String]) {
+        //print("hello")
+        execute()
+    }
+    
+    def buildPotentialRegion(cp: CPSolver,
+    				rows: IndexedSeq[CPVarBool], 
+    				cols: IndexedSeq[CPVarBool],
+    				mdl: BiclusterMDLScore,
+    				binTdb: DenseMatrix,
+    				pRegion: PotentialRegion,
+    				query: Array[Int]) = {
+      
+    	for(q <- query) {
+    		cp.post(cols(q) == 1)
+    	}
+      
+      	val selectedCols =  (0 until cols.size).filter(c => cols(c).getValue == 1)
+        val possibleRows =  (0 until rows.size).filter(r => ((rows(r).isBound && rows(r).getValue == 1) ||
+        													(!rows(r).isBound))).map(x => java.lang.Math.round(x/2))
+        println("nSelectedCols: " + selectedCols.size)
+        println("nPossibleRows: " + possibleRows.size)
+        
+        mdl.setBicIndexes(possibleRows.map(r => r:Integer).toArray,
+        				selectedCols.map(c => c:Integer).toArray )
+        
+        var bestMDL = mdl.getMDLScore()
+        var bStop = false
+        while (!bStop) {
+          var nextCol = mdl.getNextCompressedCol()
+          println("Next column: " + nextCol)
+          
+          cp.post(cols(nextCol) == 1)
+          val selectedCols2 =  (0 until cols.size).filter(c => cols(c).getValue == 1)
+          val possibleRows2 =  (0 until rows.size).filter(r => ((rows(r).isBound && rows(r).getValue == 1) ||
+        													(!rows(r).isBound))).map(x => java.lang.Math.round(x/2))
+        
+         println("nSelectedCols: "  + selectedCols2.size)
+         println(selectedCols2)
+         println("nPossibleRows: "  + possibleRows2.size)
+         println(possibleRows2)
+         
+          mdl.setBicIndexes(possibleRows2.map(r => r:Integer).toArray,
+        				selectedCols2.map(c => c:Integer).toArray )
+          var newMDLScore = mdl.getMDLScore()
+          if (newMDLScore < bestMDL) {
+            bestMDL = newMDLScore
+          }else {
+            bStop = true
+          }
+        }
+      	
+      	//cp.run(0)
+      	pRegion.update(rows, cols)
+    }
+    
+    def printSolution(rows: IndexedSeq[CPVarBool], cols:IndexedSeq[CPVarBool]) = {
+	    val selectedCols = (0 until cols.size).filter(c => cols(c).getValue == 1)
+	    val selectedRows = (0 until rows.size).filter(r => rows(r).getValue == 1)
+	    println()
+	    println("Cols = " + selectedCols + " [" + selectedCols.size + "/" + cols.size + "]")
+	    println("Rows = " + selectedRows + " [" + selectedRows.size + "/" + rows.size + "]")	    
+	}
+
+    def test() = {
+        val delimiter = "\t"                              //> delimiter  : String = "	"
+        //val filename = "D:\\repos\\data\\biclusters\\test_tdb.txt"         //> filename  : String = /home/thanh/test_tdb.txt
+        val filename = "D:\\repos\\data\\biclusters\\8modules\\noise_10\\bg_0.10_bic_0.10_8modules.txt"  
+        val matrix = new DenseMatrix(filename, delimiter) //> 
+        var mdl = new BiclusterMDLScore() 
+        mdl.setTdb(matrix);
+        var r = mdl.getTdb().rowSize                      //> r  : Int = 3
+        val bicRows = (1499 until 1800).map(x => x:Integer).toArray//Array(0,1,2).map(x => x: Integer)
+        val bicCols = (0 until 10).map(x => x:Integer).toArray//Array(0,1,2).map(x => x: Integer)
+        //val bicRows = (0 until 200).map(x => x:Integer).toArray//Array(0,1,2).map(x => x: Integer)
+        //val bicCols = (0 until 100).map(x => x:Integer).toArray//Array(0,1,2).map(x => x: Integer)
+        //val bicRows = Array(1,2,3).map(x => x: Integer)
+        //val bicCols = Array(0,1,2).map(x => x: Integer)
+        val query = Array(1, 3, 5)
+        
+        //var t = mdl.buildDBDensityMap(); 
+        mdl.setBicIndexes(bicRows, bicCols)
+        
+        //mdl.getBicRowDefaults()
+        //mdl.buildBicDensityMaps()
+        mdl.printBicDensityMaps()
+        println("model length = " + mdl.getModelLength())
+        println("data length = " + mdl.getDataLength())
+        println("MDL score = " + mdl.getMDLScore())
+        val c = mdl.getNextCompressedCol()
+        println("Next column: " + c)
+        
+        //mdl.getNextCompressedCol()
+        
+
+    }
+}

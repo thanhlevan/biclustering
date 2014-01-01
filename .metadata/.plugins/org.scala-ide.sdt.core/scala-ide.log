@@ -1,0 +1,399 @@
+2013-09-11 21:04:55,581  WARN [ModalContext] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-11 21:20:46,198 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - java.lang.UnsupportedOperationException: Position.point on class scala.reflect.internal.util.NoPosition$
+2013-09-11 21:20:46,200 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.reflect.internal.util.Position.point(Position.scala:120)
+2013-09-11 21:20:46,200 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.reflect.internal.util.Position.endOrPoint(Position.scala:129)
+2013-09-11 21:20:46,200 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.TreeBuilder.makeWhile(TreeBuilder.scala:255)
+2013-09-11 21:20:46,200 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.parseWhile$1(Parsers.scala:1339)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.expr0(Parsers.scala:1342)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.expr(Parsers.scala:1285)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.statement(Parsers.scala:1255)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$blockStatSeq$1.apply(Parsers.scala:3074)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$blockStatSeq$1.apply(Parsers.scala:3066)
+2013-09-11 21:20:46,201 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.checkNoEscapingPlaceholders(Parsers.scala:428)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.blockStatSeq(Parsers.scala:3066)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.block(Parsers.scala:1654)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.blockExpr(Parsers.scala:1643)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.simpleExpr(Parsers.scala:1556)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.prefixExpr(Parsers.scala:1518)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.postfixExpr(Parsers.scala:1487)
+2013-09-11 21:20:46,202 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.parseOther$1(Parsers.scala:1391)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.expr0(Parsers.scala:1445)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.expr(Parsers.scala:1285)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.statement(Parsers.scala:1255)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$templateStatSeq$1.apply(Parsers.scala:2995)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$templateStatSeq$1.apply(Parsers.scala:2966)
+2013-09-11 21:20:46,203 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.checkNoEscapingPlaceholders(Parsers.scala:428)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.templateStatSeq(Parsers.scala:2966)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.templateBody(Parsers.scala:2846)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.templateBodyOpt(Parsers.scala:2853)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.template(Parsers.scala:2790)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.templateOpt(Parsers.scala:2808)
+2013-09-11 21:20:46,204 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$classDef$1.apply(Parsers.scala:2709)
+2013-09-11 21:20:46,205 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$classDef$1.apply(Parsers.scala:2690)
+2013-09-11 21:20:46,205 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.savingClassContextBounds(Parsers.scala:290)
+2013-09-11 21:20:46,205 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.classDef(Parsers.scala:2690)
+2013-09-11 21:20:46,205 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.tmplDef(Parsers.scala:2666)
+2013-09-11 21:20:46,205 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.topLevelTmplDef(Parsers.scala:2651)
+2013-09-11 21:20:46,206 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$topStatSeq$2.apply(Parsers.scala:2937)
+2013-09-11 21:20:46,206 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$topStatSeq$2.apply(Parsers.scala:2937)
+2013-09-11 21:20:46,206 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.joinComment(Parsers.scala:683)
+2013-09-11 21:20:46,206 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.topStatSeq(Parsers.scala:2937)
+2013-09-11 21:20:46,206 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$compilationUnit$1.topstats$1(Parsers.scala:3132)
+2013-09-11 21:20:46,207 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$compilationUnit$1.topstats$1(Parsers.scala:3124)
+2013-09-11 21:20:46,207 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$compilationUnit$1.apply(Parsers.scala:3138)
+2013-09-11 21:20:46,207 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser$$anonfun$compilationUnit$1.apply(Parsers.scala:3102)
+2013-09-11 21:20:46,207 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.checkNoEscapingPlaceholders(Parsers.scala:428)
+2013-09-11 21:20:46,208 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.compilationUnit(Parsers.scala:3102)
+2013-09-11 21:20:46,208 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$SourceFileParser$$anonfun$parseStartRule$1.apply(Parsers.scala:141)
+2013-09-11 21:20:46,208 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$SourceFileParser$$anonfun$parseStartRule$1.apply(Parsers.scala:141)
+2013-09-11 21:20:46,208 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$Parser.parse(Parsers.scala:313)
+2013-09-11 21:20:46,208 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.Parsers$UnitParser.smartParse(Parsers.scala:242)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.ast.parser.SyntaxAnalyzer$ParserPhase.apply(SyntaxAnalyzer.scala:29)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:463)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$Run$$anonfun$compileLate$2$$anonfun$apply$1.apply(Global.scala:1682)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$Run$$anonfun$compileLate$2$$anonfun$apply$1.apply(Global.scala:1682)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.reflect.internal.SymbolTable.atPhase(SymbolTable.scala:207)
+2013-09-11 21:20:46,209 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$Run$$anonfun$compileLate$2.apply(Global.scala:1682)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$Run$$anonfun$compileLate$2.apply(Global.scala:1681)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.collection.Iterator$class.foreach(Iterator.scala:727)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.collection.AbstractIterator.foreach(Iterator.scala:1157)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.Global$Run.compileLate(Global.scala:1681)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.interactive.Global.scala$tools$nsc$interactive$Global$$parseAndEnter(Global.scala:574)
+2013-09-11 21:20:46,210 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.interactive.Global.backgroundCompile(Global.scala:481)
+2013-09-11 21:20:46,211 ERROR [Scala Presentation Compiler [MutatedDriverPathway]] - System.err - at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:25)
+2013-09-11 21:50:49,749 ERROR [Worker-42] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-09-11 21:50:49,749 ERROR [Worker-42] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-09-11 21:50:49,749 ERROR [Worker-42] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-09-11 21:52:39,888  WARN [Worker-50] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-11 21:54:01,571  WARN [Worker-42] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:09:48,431  WARN [Worker-8] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:10:16,438  WARN [Worker-9] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:10:16,963  WARN [Worker-9] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:10:17,164  WARN [Worker-9] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:14:17,905  WARN [Worker-11] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:14:18,190  WARN [Worker-11] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-09-14 10:15:40,810 ERROR [Worker-11] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-09-14 10:15:40,810 ERROR [Worker-11] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-09-14 10:15:40,810 ERROR [Worker-11] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-09-14 21:25:45,722 ERROR [Worker-0] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-09-14 21:25:46,071 ERROR [Worker-0] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-09-14 21:25:46,071 ERROR [Worker-0] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-09-15 05:02:40,733 ERROR [Worker-10] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-09-15 05:02:40,755 ERROR [Worker-10] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-09-15 05:02:40,756 ERROR [Worker-10] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-12-26 20:16:22,172 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.load(UnPickler.scala:863)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.initRoot(SymbolLoaders.scala:222)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.complete(SymbolLoaders.scala:206)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.load(SymbolLoaders.scala:210)
+	at scala.reflect.internal.Symbols$Symbol.exists(Symbols.scala:891)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:69)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:67)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:17:34,081 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.load(UnPickler.scala:863)
+	at scala.reflect.internal.Symbols$Symbol.exists(Symbols.scala:891)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:69)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:67)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:17:36,245 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.load(UnPickler.scala:863)
+	at scala.reflect.internal.Symbols$Symbol.exists(Symbols.scala:891)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:69)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:67)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:344)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:344)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:344)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:344)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:17:37,723 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.load(UnPickler.scala:863)
+	at scala.reflect.internal.Symbols$Symbol.exists(Symbols.scala:891)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:69)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:67)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:21:03,901 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1229)
+	at scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1365)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1$$anonfun$2.apply(CompilationUnitIndexes.scala:93)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1$$anonfun$2.apply(CompilationUnitIndexes.scala:93)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.mutable.HashMap$$anonfun$foreach$1.apply(HashMap.scala:98)
+	at scala.collection.mutable.HashMap$$anonfun$foreach$1.apply(HashMap.scala:98)
+	at scala.collection.mutable.HashTable$class.foreachEntry(HashTable.scala:226)
+	at scala.collection.mutable.HashMap.foreachEntry(HashMap.scala:39)
+	at scala.collection.mutable.HashMap.foreach(HashMap.scala:98)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1.<init>(CompilationUnitIndexes.scala:93)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$.apply(CompilationUnitIndexes.scala:90)
+	at scala.tools.refactoring.analysis.GlobalIndexes$GlobalIndex$.apply(GlobalIndexes.scala:37)
+	at scala.tools.eclipse.markoccurrences.ScalaOccurrencesFinder$$anonfun$findOccurrences$1$$anonfun$1$$anon$1$$anonfun$2$$anonfun$apply$2.apply(ScalaOccurrencesFinder.scala:63)
+	at scala.tools.eclipse.markoccurrences.ScalaOccurrencesFinder$$anonfun$findOccurrences$1$$anonfun$1$$anon$1$$anonfun$2$$anonfun$apply$2.apply(ScalaOccurrencesFinder.scala:63)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:22:07,733 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.load(UnPickler.scala:863)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.initRoot(SymbolLoaders.scala:222)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.complete(SymbolLoaders.scala:206)
+	at scala.tools.nsc.symtab.SymbolLoaders$SymbolLoader.load(SymbolLoaders.scala:210)
+	at scala.reflect.internal.Symbols$Symbol.exists(Symbols.scala:891)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:69)
+	at scala.tools.eclipse.semantichighlighting.classifier.SafeSymbol$$anonfun$safeSymbol$2$$anonfun$2.apply(SafeSymbol.scala:67)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:22:08,049 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.Types$TypeError: bad symbolic reference. A signature in IntWSum.class refers to term core
+in value <root>.cp which is not available.
+It may be completely missing from the current classpath, or the version on
+the classpath might be incompatible with the version used when compiling IntWSum.class.
+	at scala.reflect.internal.pickling.UnPickler$Scan.toTypeError(UnPickler.scala:847)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:854)
+	at scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1229)
+	at scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1365)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1$$anonfun$2.apply(CompilationUnitIndexes.scala:93)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1$$anonfun$2.apply(CompilationUnitIndexes.scala:93)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.mutable.HashMap$$anonfun$foreach$1.apply(HashMap.scala:98)
+	at scala.collection.mutable.HashMap$$anonfun$foreach$1.apply(HashMap.scala:98)
+	at scala.collection.mutable.HashTable$class.foreachEntry(HashTable.scala:226)
+	at scala.collection.mutable.HashMap.foreachEntry(HashMap.scala:39)
+	at scala.collection.mutable.HashMap.foreach(HashMap.scala:98)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$$anon$1.<init>(CompilationUnitIndexes.scala:93)
+	at scala.tools.refactoring.analysis.CompilationUnitIndexes$CompilationUnitIndex$.apply(CompilationUnitIndexes.scala:90)
+	at scala.tools.refactoring.analysis.GlobalIndexes$GlobalIndex$.apply(GlobalIndexes.scala:37)
+	at scala.tools.eclipse.markoccurrences.ScalaOccurrencesFinder$$anonfun$findOccurrences$1$$anonfun$1$$anon$1$$anonfun$2$$anonfun$apply$2.apply(ScalaOccurrencesFinder.scala:63)
+	at scala.tools.eclipse.markoccurrences.ScalaOccurrencesFinder$$anonfun$findOccurrences$1$$anonfun$1$$anon$1$$anonfun$2$$anonfun$apply$2.apply(ScalaOccurrencesFinder.scala:63)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-26 20:24:49,226  WARN [Worker-1] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-26 20:24:49,808  WARN [Worker-1] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-26 20:26:10,778  WARN [Worker-5] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-26 20:26:10,980  WARN [Worker-5] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-26 20:26:13,028  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-26 20:29:51,991 ERROR [Worker-11] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-12-26 20:29:51,991 ERROR [Worker-11] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-12-26 20:29:51,991 ERROR [Worker-11] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-12-27 07:51:58,164 ERROR [Worker-6] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-12-27 07:51:58,224 ERROR [Worker-6] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-12-27 07:51:58,224 ERROR [Worker-6] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-12-27 08:21:42,132  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 08:21:42,333  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 08:21:44,887  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 08:21:45,088  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 08:33:37,456 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class java.lang.Integer[] in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 10:26:58,757  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 10:30:59,904 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: object java.util.Vector<java.lang.Integer> in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:40)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:40)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 10:42:03,979 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class int in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 10:47:51,459 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: object java.util.Set<java.lang.String> in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:40)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:40)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 10:54:10,424 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class int in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 11:02:25,593 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class double in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 11:05:11,765 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class int in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:16)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:17)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:48)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:61)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:99)
+	at scala.reflect.internal.Definitions$DefinitionsClass.getClass(Definitions.scala:1031)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:123)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-27 22:15:28,945  WARN [ModalContext] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-27 22:15:29,287  WARN [ModalContext] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 09:15:32,930 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.FatalError: Unknown type: <error>, <error> [class scala.reflect.internal.Types$ErrorType$, class scala.reflect.internal.Types$ErrorType$] TypeRef? false
+	at scala.reflect.internal.SymbolTable.abort(SymbolTable.scala:49)
+	at scala.tools.nsc.Global.abort(Global.scala:254)
+	at scala.tools.nsc.backend.icode.TypeKinds$class.toTypeKind(TypeKinds.scala:397)
+	at scala.tools.nsc.backend.icode.ICodes.toTypeKind(ICodes.scala:20)
+	at scala.tools.nsc.backend.icode.TypeKinds$class.scala$tools$nsc$backend$icode$TypeKinds$$arrayOrClassType(TypeKinds.scala:406)
+	at scala.tools.nsc.backend.icode.TypeKinds$$anonfun$primitiveOrClassType$1.apply(TypeKinds.scala:433)
+	at scala.tools.nsc.backend.icode.TypeKinds$$anonfun$primitiveOrClassType$1.apply(TypeKinds.scala:433)
+	at scala.collection.MapLike$class.getOrElse(MapLike.scala:128)
+	at scala.collection.AbstractMap.getOrElse(Map.scala:58)
+	at scala.tools.nsc.backend.icode.TypeKinds$class.primitiveOrClassType(TypeKinds.scala:433)
+	at scala.tools.nsc.backend.icode.TypeKinds$class.toTypeKind(TypeKinds.scala:383)
+	at scala.tools.nsc.backend.icode.ICodes.toTypeKind(ICodes.scala:20)
+	at scala.tools.nsc.backend.jvm.GenJVMUtil$BytecodeUtil$class.javaType(GenJVMUtil.scala:100)
+	at scala.tools.eclipse.JVMUtils$$anon$1.javaType(JVMUtils.scala:15)
+	at scala.tools.eclipse.JVMUtils$class.javaType(JVMUtils.scala:38)
+	at scala.tools.eclipse.ScalaPresentationCompiler.javaType(ScalaPresentationCompiler.scala:36)
+	at scala.tools.eclipse.javaelements.ScalaJavaMapper$class.mapParamTypeSignature(ScalaJavaMapper.scala:232)
+	at scala.tools.eclipse.ScalaPresentationCompiler.mapParamTypeSignature(ScalaPresentationCompiler.scala:36)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$DefOwner$$anonfun$16.apply(ScalaStructureBuilder.scala:674)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$DefOwner$$anonfun$16.apply(ScalaStructureBuilder.scala:674)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$DefOwner$class.addDef(ScalaStructureBuilder.scala:674)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$Builder.addDef(ScalaStructureBuilder.scala:872)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$DefOwner$class.addDef(ScalaStructureBuilder.scala:659)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$Builder.addDef(ScalaStructureBuilder.scala:872)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser.traverse(ScalaStructureBuilder.scala:944)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser.traverse(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser.traverse(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser$$anonfun$traverse$1.apply(ScalaStructureBuilder.scala:951)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser$TreeTraverser.traverse(ScalaStructureBuilder.scala:951)
+	at scala.tools.eclipse.javaelements.ScalaStructureBuilder$StructureBuilderTraverser.traverse(ScalaStructureBuilder.scala:904)
+	at scala.tools.eclipse.javaelements.ScalaCompilationUnit$$anonfun$buildStructure$2$$anonfun$apply$5$$anonfun$apply$1.apply$mcV$sp(ScalaCompilationUnit.scala:89)
+	at scala.tools.eclipse.javaelements.ScalaCompilationUnit$$anonfun$buildStructure$2$$anonfun$apply$5$$anonfun$apply$1.apply(ScalaCompilationUnit.scala:88)
+	at scala.tools.eclipse.javaelements.ScalaCompilationUnit$$anonfun$buildStructure$2$$anonfun$apply$5$$anonfun$apply$1.apply(ScalaCompilationUnit.scala:88)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:339)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2013-12-29 09:37:24,870 ERROR [Worker-30] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-12-29 09:37:24,871 ERROR [Worker-30] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-12-29 09:37:24,871 ERROR [Worker-30] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2013-12-29 16:24:39,254  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:39,455  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:39,656  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:39,861  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:40,062  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:40,264  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:40,467  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 16:24:40,668  WARN [org.eclipse.jdt.internal.ui.text.JavaReconciler] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 21:44:22,085  WARN [Worker-3] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-29 21:44:22,966  WARN [Worker-3] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2013-12-30 10:14:12,974 ERROR [Worker-18] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2013-12-30 10:14:13,014 ERROR [Worker-18] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2013-12-30 10:14:13,014 ERROR [Worker-18] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.

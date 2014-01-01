@@ -1,0 +1,17 @@
+package cs.kuleuven.util
+
+import cs.kuleuven.matrix.DenseMatrix
+import oscar.cp.core._
+
+/**
+ * Created on December 27, 2013
+ * @author thanhle
+ */
+
+class PotentialRegion(rows: IndexedSeq[CPVarBool], 
+						cols:IndexedSeq[CPVarBool], 
+						binTdb: DenseMatrix) {
+  
+  	val posCols = (0 until cols.size).filter(c => (cols(c).isBound && cols(c).getValue == 1))
+	val posRows = 0
+}
