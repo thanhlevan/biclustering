@@ -30,7 +30,7 @@ class biclusteringMDL(dupFile: String,
 	  val dupMatrix = new DenseMatrix(dupFile, delimiter)
 	  val mulMatrix = new DenseMatrix(multiValuedFile, delimiter)
 	  val queryMatrix = new DenseMatrix(queryFile, delimiter)
-	  val query = (0 until queryMatrix.colSize).map(c => queryMatrix.at(1, c)).toArray
+	  val query = (0 until queryMatrix.colSize).map(c => queryMatrix.at(0, c)).toArray
 	  //expMatrix.printMatrix
 	  val nR = dupMatrix.rowSize
 	  val nC = dupMatrix.colSize	  	  
