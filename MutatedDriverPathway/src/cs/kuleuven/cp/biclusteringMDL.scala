@@ -22,6 +22,8 @@ class biclusteringMDL(dupFile: String,
 						failureThreshold: Int,
 						restartThreshold: Int
 					) extends App {
+  
+  var bSolutionFound = false
    
   def execute() = {
 	
@@ -87,6 +89,7 @@ class biclusteringMDL(dupFile: String,
 	    }
 	     
 	    printSolution(varRows, varCols)
+	    bSolutionFound = true
 	    //store the current best solution 
         Rows.foreach(r => bestRows(r) = varRows(r).value)
         Cols.foreach(c => bestCols(c) = varCols(c).value)
@@ -116,6 +119,18 @@ class biclusteringMDL(dupFile: String,
 	    	  cp.post(varCols(c) == 1)	    	  	    	  
 	    	}
 		  }
+	  }
+	  
+	  if (bSolutionFound) {
+	    println("Final solution: ")
+	    printSolution(varRows, varCols)
+	  } else {
+	    
+	    println("No solution found in the potential region! ")
+	    println("You might consider to increase the failture threshold and number of restarting times")
+	    println("Potential region:")
+	    pRegion.printRegion
+	    
 	  }
 
   }
