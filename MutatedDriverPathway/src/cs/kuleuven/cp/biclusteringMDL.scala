@@ -124,6 +124,7 @@ class biclusteringMDL(dupFile: String,
 	  if (bSolutionFound) {
 	    println("Final solution: ")
 	    printSolution(varRows, varCols)
+	    cp.printStats
 	  } else {
 	    
 	    println("No solution found in the potential region! ")
