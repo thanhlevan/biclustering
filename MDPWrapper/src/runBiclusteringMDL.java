@@ -30,11 +30,10 @@ public class runBiclusteringMDL {
         options.addOption(opColThreshold);
         options.addOption(opFailureThreshold);
         options.addOption(opRestartThreshold);
-        
+                
         options.addOption(help);
         //commandLine.
-        
-        
+                
         String binFileName = "";
         String mulFileName = "";
         String queryFileName = "";
@@ -43,8 +42,7 @@ public class runBiclusteringMDL {
         int rowThreshold = 25;
         int failureThreshold = 300;
         int restartThreshold = 5;
-        
-                
+                        
         CommandLineParser parser = new BasicParser();
         
         try{
@@ -96,7 +94,21 @@ public class runBiclusteringMDL {
         System.out.print("Failure threshold = "); System.out.println(failureThreshold);
         System.out.print("Restart threshold = "); System.out.println(restartThreshold);
         
-                
+        if (binFileName.isEmpty()) {
+        	System.out.println("Binary file is not provided. Stop.");
+        	return;
+        }
+        
+        if (mulFileName.isEmpty()) {
+        	System.out.println("Multivalued file is not provided. Stop. ");
+        	return;
+        }
+        
+        if (queryFileName.isEmpty()) {
+        	System.out.println("Query file is not provided. Stop.");
+        	return;
+        }
+        
 		biclusteringMDL bin = new biclusteringMDL(binFileName,
 													mulFileName,
 													queryFileName,
