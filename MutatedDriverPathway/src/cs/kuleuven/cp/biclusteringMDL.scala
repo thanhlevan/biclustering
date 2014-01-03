@@ -12,7 +12,6 @@ import cs.kuleuven.util.PotentialRegion
 import oscar.cp.modeling._
 import oscar.cp.core._
 import breeze.stats.distributions.Bernoulli
-import scala.util.continuations.{cps, cpsParam}
 
 class biclusteringMDL(dupFile: String,
 						multiValuedFile: String,
@@ -31,9 +30,9 @@ class biclusteringMDL(dupFile: String,
 	  //   
 	  val dupMatrix = new DenseMatrix(dupFile, delimiter)
 	  val mulMatrix = new DenseMatrix(multiValuedFile, delimiter)
-	  val queryMatrix = new DenseMatrix(queryFile, delimiter)
+	  val queryMatrix = new DenseMatrix(queryFile, delimiter)	  
 	  val query = (0 until queryMatrix.colSize).map(c => queryMatrix.at(0, c)).toArray
-	  //expMatrix.printMatrix
+	  	  
 	  val nR = dupMatrix.rowSize
 	  val nC = dupMatrix.colSize	  	  
 	  //parameters
@@ -84,17 +83,17 @@ class biclusteringMDL(dupFile: String,
 	      val unBoundedVars = (0 until varCols.length).filter(c => !varCols(c).isBound)
 	      
 	      val col = unBoundedVars.head
-	      println("next: " + col + " - unBounded = " + unBoundedVars.length)
+	      println("next item: " + col + " - unBounded = " + unBoundedVars.length)
 	      cp.branch {cp.post(varCols(col) == 0)} {cp.post(varCols(col) == 1)}
 	    }
-	     
+	    println("\nSolution found:") 
 	    printSolution(varRows, varCols)
 	    bSolutionFound = true
 	    //store the current best solution 
         Rows.foreach(r => bestRows(r) = varRows(r).value)
         Cols.foreach(c => bestCols(c) = varCols(c).value)
 	    
-	  } run(failureLimit = 100)
+	  } run(failureLimit = failureThreshold)
 	  
 	  for(i <- 0 until restartThreshold) {
 	    println("Restart " + i + "th")
@@ -122,7 +121,7 @@ class biclusteringMDL(dupFile: String,
 	  }
 	  
 	  if (bSolutionFound) {
-	    println("Final solution: ")
+	    println("\nFinal solution: ")
 	    printSolution(varRows, varCols)
 	    cp.printStats
 	  } else {
