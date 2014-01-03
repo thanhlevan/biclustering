@@ -53,10 +53,10 @@ class PotentialRegion(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
           val possibleRows2 =  (0 until rows.size).filter(r => ((rows(r).isBound && rows(r).getValue == 1) ||
         													(!rows(r).isBound))).map(x => java.lang.Math.round(x/2))
         
-         println("nSelectedCols: "  + selectedCols2.size)
-         println(selectedCols2)
-         println("nPossibleRows: "  + possibleRows2.size)
-         println(possibleRows2)
+         println("nSelectedCols: "  + selectedCols2.size + " - nPossibleRows: " + possibleRows2.size)
+         //println(selectedCols2)
+         //println("nPossibleRows: "  + possibleRows2.size)
+         //println(possibleRows2)
          
           mdl.setBicIndexes(possibleRows2.map(r => r:Integer).toArray,
         				selectedCols2.map(c => c:Integer).toArray )
