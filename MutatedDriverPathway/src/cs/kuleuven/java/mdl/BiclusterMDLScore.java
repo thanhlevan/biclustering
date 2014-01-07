@@ -499,13 +499,7 @@ public class BiclusterMDLScore implements IMDL  {
 					transDens[index]++;
 				}
 			}
-			
-			//System.out.println("Colum " + c);
-			//System.out.println("Transformed densities: ");
-			//for(int i=0;i<transDens.length;i++) System.out.print(transDens[i] + " ");
-			//System.out.println("\nDensities: ");
-			//for(int i=0;i<dens.length;i++) System.out.print(dens[i] + " ");
-			
+									
 			// For comparisons, we dont need to calculate the model length
 			// and the rowDefaults as they are the same for all of the considered columns.
 			double bicLengthInside  = 0.0;

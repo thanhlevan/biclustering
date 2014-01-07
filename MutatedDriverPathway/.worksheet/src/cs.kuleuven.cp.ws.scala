@@ -57,7 +57,7 @@ object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; de
  val c = (0.7*21).toInt
  //g.getConnectedComponent(s1.head,s2)
  */
- val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(3225); 
+ val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ))}
  /*val w = Array(1, 1, -1)
  val y = (0 until 3).map(i => CPVarBool(cp))
         
@@ -169,9 +169,8 @@ topK.print()
         println("Next column: " + c)
     }
 */
-
-val bernouli = new Bernoulli(0.5);System.out.println("""bernouli  : breeze.stats.distributions.Bernoulli = """ + $show(bernouli ));$skip(34); 
-val samples = bernouli.sample(20);System.out.println("""samples  : IndexedSeq[Boolean] = """ + $show(samples ))}
-  
-                               
+//val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)
+//val bernouli = new Bernoulli(0.5)
+//val samples = bernouli.sample(20)
+ 
 }

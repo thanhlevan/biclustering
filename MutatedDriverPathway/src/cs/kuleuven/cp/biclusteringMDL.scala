@@ -8,7 +8,7 @@ import cs.kuleuven.java.mdl._
 import cs.kuleuven.matrix._
 import cs.kuleuven.constraints.IntWSum
 import cs.kuleuven.java.mdl.BiclusterMDLScore
-import cs.kuleuven.util.PotentialRegion
+import cs.kuleuven.util.PotentialRegionBuilder
 import oscar.cp.modeling._
 import oscar.cp.core._
 import breeze.stats.distributions.Bernoulli
@@ -46,7 +46,7 @@ class biclusteringMDL(dupFile: String,
 	  val bestRows = Array.fill(nR)(0)
 	  val bestCols = Array.fill(nC)(0)
 		  
-	  val pRegion = new PotentialRegion(dupMatrix, mulMatrix)
+	  val pRegionBuilder = new PotentialRegionBuilder(dupMatrix, mulMatrix)
 	  
 	  //optimization criterion
 	  val biclusterArea = sum((0 until nR).map(r => varRows(r))) * sum((0 until nC).map(c => varCols(c))) 
@@ -60,22 +60,21 @@ class biclusteringMDL(dupFile: String,
 	      cp.add(coverageConstraint)	      
 	    }
 	
-	    //2.Noise constraints on columns
-	    for(c <- Cols) {
-	      //val colSum = sum((0 until nR).map(r => varRows(r) * (100*dupMatrix.at(r,c) + colThreshold - 100) ))
-	      //cp.add(varCols(c) ==> (colSum >== 0))
+	    // 2.Noise constraints on columns
+	    for(c <- Cols) {	    
 	      val cWeight = (0 until nR).map(r => (100*dupMatrix.at(r,c) + colThreshold - 100))
 	      val aux = new CPVarBool(cp)
 	      val colNoiseConstraint = new IntWSum(cWeight, varRows, 0, aux)
 	      cp.add(varCols(c) ==> aux)
 	    }
+	    
+	    // 3. Number of rows >= 5
 	  }
 	  
-	  println("Constructing the potential region ...")
-	  pRegion.buildPotentialRegion(cp, varRows, varCols, query)	 
-	  println("...done")
-	  pRegion.printRegion
-	  pRegion.printDensity
+	  println("Constructing potential regions ...")
+	  val pRegions = pRegionBuilder.buildPotentialRegions(cp, varRows, varCols, query)	 
+	  println("Constructing potential regions done.")
+	  pRegionBuilder.printRunSummary(pRegions)
 	  
 	  cp.exploration {
 	    
@@ -83,7 +82,7 @@ class biclusteringMDL(dupFile: String,
 	      val unBoundedVars = (0 until varCols.length).filter(c => !varCols(c).isBound)
 	      
 	      val col = unBoundedVars.head
-	      println("next item: " + col + " - unBounded = " + unBoundedVars.length)
+	      //println("next item: " + col + " - unBounded = " + unBoundedVars.length)
 	      cp.branch {cp.post(varCols(col) == 0)} {cp.post(varCols(col) == 1)}
 	    }
 	    println("\nSolution found:") 
@@ -95,42 +94,45 @@ class biclusteringMDL(dupFile: String,
 	    
 	  } run(failureLimit = failureThreshold)
 	  
-	  for(i <- 0 until restartThreshold) {
-	    println("Restart " + i + "th")
-	  
-	    cp.runSubjectTo(failureLimit = failureThreshold) {
-	    	val outCols = pRegion.getOutsideCols
-	       	for(c <- outCols) {
-	    		cp.post(varCols(c) == 0)
-	    	}
-	    	
-	    	val posCols = pRegion.getPosCols	    		  
-	    	//val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)	    	
-	    	val highProbCols: scala.collection.mutable.Set[Int] = new scala.collection.mutable.HashSet()
-	    	for(c <- posCols) {
-	    	  val bern = new Bernoulli(pRegion.getColDensity(c))
-	    	  if (bern.sample)
-	    	    highProbCols += c
-	    	}
-	    	
-	    	println("High prob cols: " + highProbCols)
-	    	for(c <- highProbCols) { 
-	    	  cp.post(varCols(c) == 1)	    	  	    	  
-	    	}
+	  for(region <- pRegions) {
+		  println("\n************************************************************")
+		  println("Set the potential region to ")
+		  region.printStatistics
+		  
+		  for(i <- 0 until restartThreshold) {
+		    println("Iteration " + i + "th")
+		  
+		    cp.runSubjectTo(failureLimit = failureThreshold) {
+		    	val outCols = region.getOutsideCols
+		       	for(c <- outCols) {
+		    		cp.post(varCols(c) == 0)
+		    	}
+		    	
+		    	val posCols 	 = region.getPosCols
+		    	val sortedCols 	 = posCols.toVector.sorted
+		    	val colDens 	 = (sortedCols).map(c => region.getColDensity(c))		    	
+		    	val highProbCols = sortedCols.filter(c => (new Bernoulli(region.getColDensity(c))).sample == true )
+		    	
+		    	println("Column densities: " + colDens)
+		    	println("High prob cols: " + highProbCols)
+		    	
+		    	for(c <- highProbCols) { 
+		    	  cp.post(varCols(c) == 1)	    	  	    	  
+		    	}
+			  }
 		  }
+	  
 	  }
 	  
 	  if (bSolutionFound) {
 	    println("\nFinal solution: ")
 	    printSolution(varRows, varCols)
 	    cp.printStats
-	  } else {
-	    
+	  } else {	    
 	    println("No solution found in the potential region! ")
-	    println("You might consider to increase the failture threshold and number of restarting times")
-	    println("Potential region:")
-	    pRegion.printRegion
-	    
+	    println("You might consider to increase the thresholds of failures and restarts.")
+	    println("Current failure threshold: " + failureThreshold)
+	    println("Current restart threshold: " + restartThreshold)
 	  }
 
   }
@@ -138,8 +140,9 @@ class biclusteringMDL(dupFile: String,
     def printSolution(rows: IndexedSeq[CPVarBool], cols:IndexedSeq[CPVarBool]) = {
 	    val selectedCols = (0 until cols.size).filter(c => cols(c).getValue == 1)
 	    val selectedRows = (0 until rows.size).filter(r => rows(r).getValue == 1)
+	    val originalRows = selectedRows.map(r => java.lang.Math.round(r/2))
 	    println()
-	    println("Cols = " + selectedCols + " [" + selectedCols.size + "/" + cols.size + "]")
-	    println("Rows = " + selectedRows + " [" + selectedRows.size + "/" + rows.size + "]")	    
+	    println("Cols = " + selectedCols.sorted + " [" + selectedCols.size + "/" + cols.size + "]")
+	    println("Rows = " + originalRows.sorted + " [" + originalRows.size + "/" + rows.size + "]")	    
 	}     
 }

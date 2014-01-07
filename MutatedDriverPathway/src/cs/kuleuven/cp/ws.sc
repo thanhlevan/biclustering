@@ -170,11 +170,8 @@ topK.print()
         println("Next column: " + c)
     }
 */
-
-val bernouli = new Bernoulli(0.5)                 //> bernouli  : breeze.stats.distributions.Bernoulli = Bernoulli(0.5)
-val samples = bernouli.sample(20)                 //> samples  : IndexedSeq[Boolean] = Vector(false, true, false, false, true, tr
-                                                  //| ue, true, true, false, true, false, false, false, false, true, false, true,
-                                                  //|  false, false, true)
-  
-                               
+//val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)
+//val bernouli = new Bernoulli(0.5)
+//val samples = bernouli.sample(20)
+ 
 }

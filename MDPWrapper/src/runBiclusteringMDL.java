@@ -1,5 +1,4 @@
 import cs.kuleuven.cp.biclusteringMDL;
-//import cs.kuleuven.cp.topKMutatedPathways;
 
 import org.apache.commons.cli.*;
 
@@ -41,7 +40,7 @@ public class runBiclusteringMDL {
         int colThreshold = 25;
         int rowThreshold = 25;
         int failureThreshold = 300;
-        int restartThreshold = 5;
+        int restartThreshold = 3;
                         
         CommandLineParser parser = new BasicParser();
         
