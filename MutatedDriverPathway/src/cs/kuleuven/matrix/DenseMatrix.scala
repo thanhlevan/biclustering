@@ -33,6 +33,10 @@ class DenseMatrix(filename: String, delimiter: String) {
     
   }
   
+  def setValue(i: Int, j: Int, value: Int) = {
+    denseMatrix(i)(j) = value
+  }
+  
   def printMatrix() = {
     for(a <- denseMatrix){
       for(i <- a) {

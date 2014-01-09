@@ -57,7 +57,7 @@ object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; de
  val c = (0.7*21).toInt
  //g.getConnectedComponent(s1.head,s2)
  */
- val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ))}
+ val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(3401); 
  /*val w = Array(1, 1, -1)
  val y = (0 until 3).map(i => CPVarBool(cp))
         
@@ -172,5 +172,11 @@ topK.print()
 //val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)
 //val bernouli = new Bernoulli(0.5)
 //val samples = bernouli.sample(20)
+
+val v = Vector(Set(1,3,1),Set(3,4,5));System.out.println("""v  : scala.collection.immutable.Vector[scala.collection.immutable.Set[Int]] = """ + $show(v ));$skip(33); 
+val v2 = v ++ Vector(Set(4,5,6));System.out.println("""v2  : scala.collection.immutable.Vector[scala.collection.immutable.Set[Int]] = """ + $show(v2 ))}
+
+		  //val curResult = (0 until rows.size).filter(r => rows(r).getValue == 1).toSet
+		  //val uniResult = prevResult union curResult
  
 }

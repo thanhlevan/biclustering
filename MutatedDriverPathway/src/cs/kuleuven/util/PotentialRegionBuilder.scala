@@ -139,14 +139,59 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
 	  val mdlScores = scores.toSeq
 	  val scores2 = mdlScores.filter(s => s > 0)
 	  println("\nSummary results of constructing potential regions:")
-	  println("MDL scores: " + scores2)
-	  println("There are " + regions.size + " potential regions ")
+	  println("MDL scores: " + scores2 +"\n")
+	  println(regions.size + " potential regions found: \n ")
 	  var i = 0
 	  for(region <- regions) {
 	    i = i + 1
 	    println("Potential region " + i)
 	    region.printStatistics
 	  }
+	  
+	}
+	
+	/** 
+	 *  Calculate the MDL score of a model defined by a set of bi-clusters M = (B1,..Bn)
+	 *  @param rowSets is a set vector containing row indexes of the bi-clusters
+	 *  @param colSets is a set vector containing col indexes of the bi-clusters
+	 *  @return MDL score L(D;M)
+	 */
+	
+	def getMDLOfNonOverlappingBiclusters(rowSets: Vector[Set[Int]],
+	    colSets: Vector[Set[Int]]): Int = {
+	  
+	  var modelLen 		= 0.0
+	  var dataLenInside = 0.0
+	  var coveredArea 	= 0.0
+	  
+	  val bicDensities = Array.fill[Int](mdl.getDBDensityMapSize())(0)
+	  
+	  for(i <- 0 until rowSets.length) {
+	    val bicRows = rowSets(i).toArray
+	    val bicCols = colSets(i).toArray
+	    mdl.setBicIndexes(bicRows.map(x => x:Integer), 
+	        bicCols.map(x => x:Integer))
+	    
+	    modelLen = modelLen + mdl.getModelLength()
+	    coveredArea = coveredArea + mdl.getBicArea()
+	    dataLenInside = dataLenInside + mdl.getDataLengthInside()
+	    
+	    // calculate accumulated symbol densities in all of the bi-clusters
+	    for(t <- 0 until mdl.getSymbolSize()) {
+	      var den = bicDensities(t)
+	      bicDensities.update(t, bicDensities(t) + mdl.getBicSymbolDensity(t))
+	    }
+	        
+	  }
+	  
+	  // calculate data length outside bi-clusters
+	  val remain = mdl.getTdb().rowSize * mdl.getTdb().colSize - coveredArea
+	  var dataLenOutside = 0.0
+	  for(i <- 0 until bicDensities.size) {
+	    val symDen = mdl.getDBSymbolDensity(i) - bicDensities(i)
+	    dataLenOutside = dataLenOutside + symDen * mdl.log(remain*1.0/symDen, mdl.getLogBase())
+	  }
+	  return (modelLen + dataLenInside + dataLenOutside).toInt
 	  
 	}
   		

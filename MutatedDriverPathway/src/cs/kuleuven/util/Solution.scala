@@ -75,6 +75,32 @@ class Solution(names: List[String]) {
         }
     }
     
+    /**
+     * Convert the results of varName to a string. 
+     * The method toString2(..) differs from toString(..) in the point that
+     * it automatically converts the indexes in the duplicated matrix to the original matrix  
+     */
+    
+    def toString2(varName: String, delimiter: String): String = {
+        val pos = nameMap.get(varName).get
+        var result: String = ""
+            
+        if (values(pos) == null) {
+            ""
+        } else {
+            var i = 0
+            val converted = values(pos).map(x => java.lang.Math.round(x/2)).toVector.sorted
+            for(v <- converted) {
+                if (i < converted.size - 1)
+                	result += v + delimiter
+                else
+                    result += v
+                i +=1
+            }
+            return result  
+        }
+    }
+    
     def saveVar(varName: String, filename: String, delimiter: String, append: Boolean) = {
         
         var dos: DataOutputStream = null
@@ -92,18 +118,32 @@ class Solution(names: List[String]) {
         	dos.close();
         } catch {
             case ioe: IOException => throw new Exception(ioe.getMessage())        
-        } 
-        /*try{
-        	val stream = new PrintWriter(filename)
-        	val varValue = toString(varName, delimiter)
+        }       
+    }
+    
+    
+    /**
+     * Save the result of varName in a file and   
+     * automatically converts the indexes in the duplicated matrix to the original matrix 
+     */
+    def saveVar2(varName: String, filename: String, delimiter: String, append: Boolean) = {
+        
+        var dos: DataOutputStream = null
+        try {
+        	var outFile = new File(filename);
         	if (append) {
-        	    stream.println()
+        		dos = new DataOutputStream(new FileOutputStream(filename, true));
         	} else {
-        	    
+        		dos = new DataOutputStream(new FileOutputStream(outFile));
         	}
+        	
+        	val varValue = toString2(varName, delimiter)
+        	dos.writeBytes(varValue);
+        	dos.writeBytes("\n")
+        	dos.close();
         } catch {
-            case ioe: IOException => throw new Exception(ioe.getMessage())
-        }*/
+            case ioe: IOException => throw new Exception(ioe.getMessage())        
+        }       
     }
     
     

@@ -11,7 +11,8 @@ object biclusteringLNS extends App {
       //val dupFile = "/home/thanh/data/biclusters/8modules/data/noise_0.05/dup_bg_0.05_bic.0.05_8modules.txt"
 	  val dupFile = "/home/thanh/data/1staircase/data/step_0.10/dup_bgnoise_0.05_step_0.10.txt"
 	  //   
-	  val dupMatrix = new DenseMatrix(dupFile, delimiter)	  
+	  val dupMatrix = new DenseMatrix(dupFile, delimiter)	
+	 	   
 	  //expMatrix.printMatrix
 	  val nR = dupMatrix.rowSize
 	  val nC = dupMatrix.colSize	  	  

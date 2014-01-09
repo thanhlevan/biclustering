@@ -18,6 +18,7 @@ public class runBiclusteringMDL {
         Option opColThreshold = OptionBuilder.withArgName("ColThreshold").hasArg().withDescription("row threshold").create("cth");
         Option opFailureThreshold = OptionBuilder.withArgName("FailureThreshold").hasArg().withDescription("failure threshold").create("fth");
         Option opRestartThreshold = OptionBuilder.withArgName("RestartThreshold").hasArg().withDescription("restart threshold").create("sth");
+        Option opRemovedRowsFile = OptionBuilder.withArgName("RemovedRowsFile").hasArg().withDescription("File contain rows need to be removed").create("rf");
                 
         Option help	= new Option("help", "Print help");
         
@@ -29,19 +30,23 @@ public class runBiclusteringMDL {
         options.addOption(opColThreshold);
         options.addOption(opFailureThreshold);
         options.addOption(opRestartThreshold);
+        options.addOption(opRemovedRowsFile);
                 
         options.addOption(help);
-        //commandLine.
+        
+        // default values
                 
         String binFileName = "";
         String mulFileName = "";
         String queryFileName = "";
+        String rmRowsFileName = "";
                 
         int colThreshold = 25;
         int rowThreshold = 25;
         int failureThreshold = 300;
         int restartThreshold = 3;
                         
+        // parse command line to get values
         CommandLineParser parser = new BasicParser();
         
         try{
@@ -56,6 +61,10 @@ public class runBiclusteringMDL {
         	
         	if (cmd.hasOption("qf")) {
         		queryFileName = cmd.getOptionValue("qf");
+        	}
+        	
+        	if (cmd.hasOption("rf")) {
+        		rmRowsFileName = cmd.getOptionValue("rf");
         	}
         	
         	if (cmd.hasOption("cth")) {
@@ -87,6 +96,7 @@ public class runBiclusteringMDL {
         System.out.println("Binary File = " + binFileName);
         System.out.println("Multivalued File = " + mulFileName);
         System.out.println("Query File = " + queryFileName);
+        System.out.println("Removed rows File = " + rmRowsFileName);
     
         System.out.print("Row noise threshold = "); System.out.println(rowThreshold);
         System.out.print("Col noise threshold = "); System.out.println(colThreshold);
@@ -107,14 +117,50 @@ public class runBiclusteringMDL {
         	System.out.println("Query file is not provided. Stop.");
         	return;
         }
-        
+        int solutionIndex = 1;
 		biclusteringMDL bin = new biclusteringMDL(binFileName,
 													mulFileName,
 													queryFileName,
+													rmRowsFileName,
 													rowThreshold,
 													colThreshold,
 													failureThreshold,
-													restartThreshold);																	;
+													restartThreshold,
+													solutionIndex);																	;
 		bin.execute();
+		if (!bin.isSolutionFound())
+			return;
+		
+		boolean bStop = false;
+		while (!bStop) {
+			solutionIndex++;
+			System.out.println("*********************************************");
+			System.out.println("* Starting the " + Integer.toString(solutionIndex) + "th iteration      *");
+			System.out.println("*********************************************");
+			
+			rmRowsFileName = "/home/thanh/test/removedRows.txt";
+			biclusteringMDL biMiner = new biclusteringMDL(binFileName,
+					mulFileName,
+					queryFileName,
+					rmRowsFileName,
+					rowThreshold,
+					colThreshold,
+					failureThreshold,
+					restartThreshold,
+					solutionIndex);	
+			biMiner.execute();
+			
+			if (!biMiner.isSolutionFound()) {
+				bStop = true;
+				System.out.println("No solution found in the iteration " + solutionIndex);
+				System.out.println("Stop.");
+			}
+			
+			if (!biMiner.bBetterMDLScore()) {
+				bStop = true;
+				System.out.println("The MDL score will get worse when adding the solution found in this iteration!");
+				System.out.println("Program terminated!");
+			}
+		}
 	}
 }
