@@ -11,13 +11,15 @@ public class BiclusterMDLScore implements IMDL  {
 	private int modelLength;
 	private int dataLength;
 	private int mdlScore;
+	private int dataLengthInside;
+	private int dataLengthOutside;
 	private DenseMatrix tdb;
 	private Integer[] bicColIndexes; 
 	private Integer[] bicRowIndexes; 
 	private Vector<Integer>	 bicRowDefaults;	
 	private Map<String, Integer> dbDensityMap;
-	private Map<String, Integer> bicTransDensityMap;
-	private Map<String, Integer> bicDensityMap;
+	private Map<String, Integer> bicTransDensityMap; //density map of the transformed bi-cluster which  has the majority char
+	private Map<String, Integer> bicDensityMap; //density map of the bi-cluster
 	private int nBicArea;
 	private	int nSymbolSize;
 	private String[] symbols;
@@ -50,6 +52,10 @@ public class BiclusterMDLScore implements IMDL  {
 		}
 	}
 	
+	public int getLogBase() {
+		return this.base;
+	}
+	
 	public String getSymbolAt(int i) throws IllegalArgumentException {
 		if (i <0 || i >= symbols.length)
 			throw new IllegalArgumentException("Symbol index is out of range.");
@@ -73,16 +79,44 @@ public class BiclusterMDLScore implements IMDL  {
 	public int getBicArea() {
 		return this.nBicArea;
 	}
+	
+	public int getDataLengthInside() {
+		return dataLengthInside;
+	}
+
+	public void setDataLengthInside(int dataLengthInside) {
+		this.dataLengthInside = dataLengthInside;
+	}
+
+	public int getDataLengthOutside() {
+		return dataLengthOutside;
+	}
+
+	public void setDataLengthOutside(int dataLengthOutside) {
+		this.dataLengthOutside = dataLengthOutside;
+	}
 
 	public void setBicIndexes(Integer[] rowIndexes, Integer[] colIndexes) throws Exception {		
 		this.bicRowIndexes = rowIndexes;
 		this.bicColIndexes = colIndexes;
 		this.nBicArea = rowIndexes.length * colIndexes.length;
 		
+		int len1 = 0;
+		int len2 = 0;
+				
 		try {
 			int mLen = calModelLength();
-			int dLen = calDataLength();
+			// calculate data length
+			getBicRowDefaults();
+			buildBicDensityMaps();
+			len1 = calDataLengthInsideBic();			
+			len2 = calDataLengthOutsideBic();
+			int dLen = len1 + len2;
+			
+			// save information
 			setModelLength(mLen);
+			setDataLengthInside(len1);
+			setDataLengthOutside(len2);
 			setDataLength(dLen);
 			setMDLScore(mLen + dLen);
 		}catch(Exception ex) {
@@ -405,6 +439,8 @@ public class BiclusterMDLScore implements IMDL  {
 		return (int)len;
 	}
 	
+	
+	
 	private int calDataLengthOutsideBic() {
 		int nBicRows = 0;
 		int nBicCols = 0;
@@ -531,6 +567,22 @@ public class BiclusterMDLScore implements IMDL  {
 		}
 		
 		return col;
+	}
+	
+	public int getSymbolSize() {
+		return this.nSymbolSize;
+	}
+	
+	public int getBicSymbolDensity(int symIndex) {
+		String symbol = getSymbolAt(symIndex);
+		int den = bicDensityMap.get(symbol);
+		return den;
+	}
+	
+	public int getDBSymbolDensity(int symIndex) {
+		String symbol = getSymbolAt(symIndex);
+		int den = dbDensityMap.get(symbol);
+		return den;
 	}
 	
 	public void printBicDensityMaps() {
