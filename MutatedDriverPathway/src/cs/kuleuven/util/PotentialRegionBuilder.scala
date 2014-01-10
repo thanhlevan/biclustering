@@ -152,7 +152,8 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
 	
 	/** 
 	 *  Calculate the MDL score of a model defined by a set of bi-clusters M = (B1,..Bn)
-	 *  @param rowSets is a set vector containing row indexes of the bi-clusters
+	 *  @param rowSets is a set vector containing row indexes of the bi-clusters.
+	 *  		Row indexes are those in the multi-valued matrix rather than in the duplicated matrix
 	 *  @param colSets is a set vector containing col indexes of the bi-clusters
 	 *  @return MDL score L(D;M)
 	 */

@@ -246,13 +246,15 @@ class biclusteringMDL(dupFile: String,
     			pRegionBuilder: PotentialRegionBuilder,
     			curSolRows: IndexedSeq[CPVarBool], 
     			curSolCols: IndexedSeq[CPVarBool]): Boolean = {
-      
+      // row indexes saved in solution file are converted to the original values
+      // which are 
       val rowSets = (1 until iteration).toVector.map(iter => readSolution(workingDir, iter, "rows", delimiter))
       val colSets = (1 until iteration).toVector.map(iter => readSolution(workingDir, iter, "cols", delimiter))
       
       val prevMDL = pRegionBuilder.getMDLOfNonOverlappingBiclusters(rowSets, colSets)
       
-      val curRows = (0 until curSolRows.size).filter(r => curSolRows(r).getValue == 1).toSet
+      // current row indexes -> indexes in multi-valued dataset 
+      val curRows = (0 until curSolRows.size).filter(r => curSolRows(r).getValue == 1).map(r => java.lang.Math.round(r/2)).toSet
       val curCols = (0 until curSolCols.size).filter(c => curSolCols(c).getValue == 1).toSet
       val newRowSets = rowSets ++ Vector(curRows)
       val newColSets = colSets ++ Vector(curCols)
