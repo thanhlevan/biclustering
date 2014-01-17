@@ -44,7 +44,7 @@ public class runBiclusteringMDL {
         int colThreshold = 25;
         int rowThreshold = 25;
         int failureThreshold = 300;
-        int restartThreshold = 3;
+        int restartThreshold = 2;
                         
         // parse command line to get values
         CommandLineParser parser = new BasicParser();

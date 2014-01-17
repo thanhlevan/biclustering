@@ -24,6 +24,7 @@ import breeze.stats.distributions.Bernoulli
  * @param colTheshold
  * @param failureThreshold
  * @param restartThreshold
+ * @param iteration
  */
 
 class biclusteringMDL(dupFile: String,
@@ -126,6 +127,11 @@ class biclusteringMDL(dupFile: String,
 	  println("Constructing potential regions done.")
 	  pRegionBuilder.printRunSummary(pRegions)
 	  
+	  if (pRegions.size == 0) {
+	    println("\n No potential regions found. Stop.")
+	    cp.stop	    
+	  }    
+	      
 	  cp.exploration {
 	    
 	    while(!allBounds(varCols) ) {
