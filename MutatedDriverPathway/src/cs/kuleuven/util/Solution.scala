@@ -58,20 +58,22 @@ class Solution(names: List[String]) {
     
     def toString(varName: String, delimiter: String): String = {
         val pos = nameMap.get(varName).get
-        var result: String = ""
+        //var result: String = ""
             
         if (values(pos) == null) {
             ""
         } else {
-            var i = 0
+            /*var i = 0
             for(v <- values(pos)) {
                 if (i < values(pos).size - 1)
                 	result += v + delimiter
                 else
                     result += v
                 i +=1
-            }
-            return result  
+            }*/
+        	val sortedValues = values(pos).toVector.sorted
+        	val tabValues = sortedValues.mkString(delimiter)
+        	return tabValues
         }
     }
     
@@ -88,7 +90,7 @@ class Solution(names: List[String]) {
         if (values(pos) == null) {
             ""
         } else {
-            var i = 0
+            /*var i = 0
             val converted = values(pos).map(x => java.lang.Math.round(x/2)).toVector.sorted
             for(v <- converted) {
                 if (i < converted.size - 1)
@@ -97,7 +99,11 @@ class Solution(names: List[String]) {
                     result += v
                 i +=1
             }
-            return result  
+            return result*/
+        	val sortedValues = values(pos).toVector.sorted
+        	val originalIndexes = sortedValues.map(x => java.lang.Math.round(x/2))
+        	val result = originalIndexes.mkString(delimiter)
+        	return result
         }
     }
     

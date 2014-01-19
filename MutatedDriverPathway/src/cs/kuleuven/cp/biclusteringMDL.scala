@@ -31,6 +31,7 @@ class biclusteringMDL(dupFile: String,
 						multiValuedFile: String,
 						queryFile: String,
 						removedRowsFile: String, //zero-indexed row indexes of rows in multi-valued file
+						workingDir: String,
 						rowThreshold: Int,
 						colThreshold: Int,
 						failureThreshold: Int,
@@ -190,11 +191,11 @@ class biclusteringMDL(dupFile: String,
 	    //check MDL score to determine whether to continue or not
 	    if (iteration == 1) {
 	      bBetterMDLScore = true
-	      saveSolution(varRows, varCols, iteration)
+	      saveSolution(workingDir, varRows, varCols, iteration)
 	    } else if (iteration > 1){
-	      bBetterMDLScore = bContinue(iteration, "/home/thanh/test/", pRegionBuilder, varRows, varCols)
+	      bBetterMDLScore = bContinue(iteration, workingDir, pRegionBuilder, varRows, varCols)
 	      if (bBetterMDLScore) {
-	        saveSolution(varRows, varCols, iteration)
+	        saveSolution(workingDir, varRows, varCols, iteration)
 	      }
 	    }
 	    
@@ -216,13 +217,13 @@ class biclusteringMDL(dupFile: String,
 	    println("Rows = " + originalRows.sorted + " [" + originalRows.size + "/" + rows.size + "]")	    
 	}
     
-    def saveSolution(rows: IndexedSeq[CPVarBool], cols: IndexedSeq[CPVarBool], iterationTh: Int) = {
+    def saveSolution(directory: String, rows: IndexedSeq[CPVarBool], cols: IndexedSeq[CPVarBool], iterationTh: Int) = {
       
       val solu = new Solution(List("rows","cols"))
       solu.update("rows", rows)
       solu.update("cols", cols)
       
-      val directory = "/home/thanh/test/"
+      //val directory = "/home/thanh/test/"
       val delimiter = "\t"  
       val rowFileName = directory + "rows_" + iterationTh + ".txt"
       val colFileName = directory + "cols_" + iterationTh + ".txt"
