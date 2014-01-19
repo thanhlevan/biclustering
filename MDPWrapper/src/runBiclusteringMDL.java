@@ -19,6 +19,7 @@ public class runBiclusteringMDL {
         Option opFailureThreshold = OptionBuilder.withArgName("FailureThreshold").hasArg().withDescription("failure threshold").create("fth");
         Option opRestartThreshold = OptionBuilder.withArgName("RestartThreshold").hasArg().withDescription("restart threshold").create("sth");
         Option opRemovedRowsFile = OptionBuilder.withArgName("RemovedRowsFile").hasArg().withDescription("File contain rows need to be removed").create("rf");
+        Option opWorkingDir = OptionBuilder.withArgName("WorkingDirectory").hasArg().withDescription("Working directory to store results").create("wd");
                 
         Option help	= new Option("help", "Print help");
         
@@ -31,15 +32,17 @@ public class runBiclusteringMDL {
         options.addOption(opFailureThreshold);
         options.addOption(opRestartThreshold);
         options.addOption(opRemovedRowsFile);
+        options.addOption(opWorkingDir);
                 
         options.addOption(help);
         
         // default values
                 
-        String binFileName = "";
-        String mulFileName = "";
-        String queryFileName = "";
-        String rmRowsFileName = "";
+        String binFileName 		= "" ;
+        String mulFileName 		= "" ;
+        String queryFileName 	= "" ;
+        String rmRowsFileName 	= "" ;
+        String workingDir 		= "./" ;
                 
         int colThreshold = 25;
         int rowThreshold = 25;
@@ -61,6 +64,10 @@ public class runBiclusteringMDL {
         	
         	if (cmd.hasOption("qf")) {
         		queryFileName = cmd.getOptionValue("qf");
+        	}
+        	
+        	if (cmd.hasOption("wd")) {
+        		workingDir = cmd.getOptionValue("wd");
         	}
         	
         	if (cmd.hasOption("rf")) {
@@ -122,6 +129,7 @@ public class runBiclusteringMDL {
 													mulFileName,
 													queryFileName,
 													rmRowsFileName,
+													workingDir,
 													rowThreshold,
 													colThreshold,
 													failureThreshold,
@@ -138,11 +146,12 @@ public class runBiclusteringMDL {
 			System.out.println("* Starting the " + Integer.toString(solutionIndex) + "th iteration      *");
 			System.out.println("*********************************************");
 			
-			rmRowsFileName = "/home/thanh/test/removedRows.txt";
+			rmRowsFileName = workingDir + "removedRows.txt";
 			biclusteringMDL biMiner = new biclusteringMDL(binFileName,
 					mulFileName,
 					queryFileName,
 					rmRowsFileName,
+					workingDir,
 					rowThreshold,
 					colThreshold,
 					failureThreshold,
