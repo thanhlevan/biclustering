@@ -57,8 +57,8 @@ object ws {
  val c = (0.7*21).toInt
  //g.getConnectedComponent(s1.head,s2)
  */
- val cp = CPSolver()                              //> cp  : oscar.cp.modeling.CPSolver = ReversibleSearchNode: nbPushed0 currentT
-                                                  //| railSize:1
+ val cp = CPSolver()                              //> cp  : oscar.cp.modeling.CPSolver = SearchNode: nbPushed0 currentTrailSize:1
+                                                  //| 
  /*val w = Array(1, 1, -1)
  val y = (0 until 3).map(i => CPVarBool(cp))
         
@@ -173,5 +173,21 @@ topK.print()
 //val sortedDenCols = unBoundedCols.sortBy(c => pRegion.getColDensity(c))(Ordering[Double].reverse)
 //val bernouli = new Bernoulli(0.5)
 //val samples = bernouli.sample(20)
+
+//val v = Vector(Set(1,3,1),Set(3,4,5))
+//val v2 = v ++ Vector(Set(4,5,6))
+
+		  //val curResult = (0 until rows.size).filter(r => rows(r).getValue == 1).toSet
+		  //val uniResult = prevResult union curResult
+	//val v = Vector(2, 3, 4, 5, 6)
+	//val den = Vector(0.6, 0.2, 0.8, 0.1, 0.9)
+	
+	//val sortedV = (0 until v.size).sortBy(c => den(c))(Ordering[Double].reverse)
+	val s1 = scala.collection.immutable.HashSet(1, 2, 3)
+                                                  //> s1  : scala.collection.immutable.HashSet[Int] = Set(1, 2, 3)
+	val s2 = scala.collection.immutable.HashSet(1, 4, 6)
+                                                  //> s2  : scala.collection.immutable.HashSet[Int] = Set(1, 6, 4)
+	val s3 = s2 &~ s1                         //> s3  : scala.collection.immutable.HashSet[Int] = Set(6, 4)
+	
  
 }

@@ -6,7 +6,7 @@ import oscar.cp.core.CPVarInt
 import oscar.cp.core.Constraint
 import oscar.cp.core.CPVarBool
 import oscar.cp.util.ArrayUtils;
-import oscar.reversible.ReversibleInt
+//import oscar.reversible.ReversibleInt
 import java.security.InvalidParameterException
 
 /**

@@ -31,6 +31,11 @@ class TopKSolutions(k : Integer) {
         }
     }
     
+    def getTopSolution(): Solution = {
+      val sortedSols = solutions.filter(s => s!=null).sortBy(s => s.objValue)
+      sortedSols.head
+    }
+    
     def print() = {
         val sortedSols = solutions.filter(s => s!=null).sortBy(s => s.objValue)
         for(s <- sortedSols) {

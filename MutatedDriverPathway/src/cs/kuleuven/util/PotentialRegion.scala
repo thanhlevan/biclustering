@@ -44,8 +44,25 @@ class PotentialRegion(posRows: Set[Int],
     println("nCols = " + posCols.size + "/" + mulTdb.colSize + 
         " - nRows = " + posRows.size + "/" + mulTdb.rowSize +
         " - MDLScore = " + mdlScore)
-    println("Columns = " + posCols.toVector.sorted + "\n")
-    println("Row indexes (in the multi-valued matrix) = " + posRows.toVector.sorted)
+    println("Column & row indexs are zero-indexed values")  
+    println("Row indexes are those in the multi-valued matrix")
+    println("Cols = " + posCols.toVector.sorted + "")
+    println("Rows = " + posRows.toVector.sorted + "\n")
   }
+  
+  def getRowsRemoved(): Set[Int] = {
+    val allRows = (0 until mulTdb.rowSize).map(x => x).toSet
+    allRows &~ posRows.toSet
+  }
+  
+  def getDupRowsRemoved(): Set[Int] = {
+    val allRows = (0 until mulTdb.rowSize).map(x => x).toSet
+    val rmRows = allRows &~ posRows.toSet
+    val evenRows = rmRows.map(x => 2*x)
+    val oddRows = rmRows.map(x => 2*x + 1)
+    evenRows ++ oddRows
+  }
+  
+  def getRegionIndex() = posIndex
 
 }

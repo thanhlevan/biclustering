@@ -36,6 +36,21 @@ class Solution(names: List[String]) {
         }
     }
     
+    def update(varName: String, selectedValues: scala.collection.immutable.Set[Int]) = {
+      
+      val pos = nameMap.get(varName).get
+      
+      if (values(pos) == null) {
+            values(pos) = new scala.collection.mutable.HashSet[Int]()            
+            for(v <- selectedValues)
+            	values(pos).add(v)
+      } else {
+            values(pos).clear
+            for(v <- selectedValues)
+            	values(pos).add(v)
+      }
+    }
+    
     def setObjValue(objVal: Integer) = {
         objValue = objVal
     }
@@ -45,9 +60,14 @@ class Solution(names: List[String]) {
         if(values(pos) == null) {
             println(varName + " is null")
         } else {
-        	println( varName + ": " + values(pos) + " [" + values(pos).size + "]")
+        	println( varName + " [" + values(pos).size + "]:" + values(pos).toVector.sorted  )
         }
                 
+    }
+    
+    def getVarValue(varName: String): scala.collection.mutable.HashSet[Int] = {
+      val pos = nameMap.get(varName).get
+      values(pos)
     }
     
     def print() = {
@@ -132,7 +152,7 @@ class Solution(names: List[String]) {
      * Save the result of varName in a file and   
      * automatically converts the indexes in the duplicated matrix to the original matrix 
      */
-    def saveVar2(varName: String, filename: String, delimiter: String, append: Boolean) = {
+   /* def saveVar2(varName: String, filename: String, delimiter: String, append: Boolean) = {
         
         var dos: DataOutputStream = null
         try {
@@ -150,7 +170,7 @@ class Solution(names: List[String]) {
         } catch {
             case ioe: IOException => throw new Exception(ioe.getMessage())        
         }       
-    }
+    }*/
     
     
 }

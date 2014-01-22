@@ -57,7 +57,7 @@ object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; de
  val c = (0.7*21).toInt
  //g.getConnectedComponent(s1.head,s2)
  */
- val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(3401); 
+ val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(3785); 
  /*val w = Array(1, 1, -1)
  val y = (0 until 3).map(i => CPVarBool(cp))
         
@@ -173,10 +173,18 @@ topK.print()
 //val bernouli = new Bernoulli(0.5)
 //val samples = bernouli.sample(20)
 
-val v = Vector(Set(1,3,1),Set(3,4,5));System.out.println("""v  : scala.collection.immutable.Vector[scala.collection.immutable.Set[Int]] = """ + $show(v ));$skip(33); 
-val v2 = v ++ Vector(Set(4,5,6));System.out.println("""v2  : scala.collection.immutable.Vector[scala.collection.immutable.Set[Int]] = """ + $show(v2 ))}
+//val v = Vector(Set(1,3,1),Set(3,4,5))
+//val v2 = v ++ Vector(Set(4,5,6))
 
 		  //val curResult = (0 until rows.size).filter(r => rows(r).getValue == 1).toSet
 		  //val uniResult = prevResult union curResult
+	//val v = Vector(2, 3, 4, 5, 6)
+	//val den = Vector(0.6, 0.2, 0.8, 0.1, 0.9)
+	
+	//val sortedV = (0 until v.size).sortBy(c => den(c))(Ordering[Double].reverse)
+	val s1 = scala.collection.immutable.HashSet(1, 2, 3);System.out.println("""s1  : scala.collection.immutable.HashSet[Int] = """ + $show(s1 ));$skip(54); 
+	val s2 = scala.collection.immutable.HashSet(1, 4, 6);System.out.println("""s2  : scala.collection.immutable.HashSet[Int] = """ + $show(s2 ));$skip(19); 
+	val s3 = s2 &~ s1;System.out.println("""s3  : scala.collection.immutable.HashSet[Int] = """ + $show(s3 ))}
+	
  
 }

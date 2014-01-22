@@ -1,4 +1,6 @@
 import cs.kuleuven.cp.biclusteringMDL;
+import cs.kuleuven.cp.CBic;
+
 
 import org.apache.commons.cli.*;
 
@@ -38,16 +40,16 @@ public class runBiclusteringMDL {
         
         // default values
                 
-        String binFileName 		= "" ;
-        String mulFileName 		= "" ;
-        String queryFileName 	= "" ;
+        String binFileName 		= "/home/thanh/data/biclusters/8modules/data/noise_10/dup_bg_0.10_bic_0.10_8modules.txt" ;
+        String mulFileName 		= "/home/thanh/data/biclusters/8modules/data/noise_10/bg_0.10_bic_0.10_8modules.txt" ;
+        String queryFileName 	= "/home/thanh/querytest.txt" ;
         String rmRowsFileName 	= "" ;
-        String workingDir 		= "./" ;
+        String workingDir 		= "/home/thanh/test/syn/query_450/" ;
                 
         int colThreshold = 25;
         int rowThreshold = 25;
         int failureThreshold = 300;
-        int restartThreshold = 2;
+        int restartThreshold = 5;
                         
         // parse command line to get values
         CommandLineParser parser = new BasicParser();
@@ -125,7 +127,18 @@ public class runBiclusteringMDL {
         	return;
         }
         int solutionIndex = 1;
-		biclusteringMDL bin = new biclusteringMDL(binFileName,
+        CBic bic = new CBic(binFileName,
+													mulFileName,
+													queryFileName,
+													rmRowsFileName,
+													workingDir,
+													rowThreshold,
+													colThreshold,
+													failureThreshold,
+													restartThreshold,
+													solutionIndex);	
+        bic.execute();
+		/*biclusteringMDL bin = new biclusteringMDL(binFileName,
 													mulFileName,
 													queryFileName,
 													rmRowsFileName,
@@ -170,6 +183,6 @@ public class runBiclusteringMDL {
 				System.out.println("The MDL score will get worse when adding the solution found in this iteration!");
 				System.out.println("Program terminated!");
 			}
-		}
+		}*/
 	}
 }

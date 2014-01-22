@@ -7,6 +7,7 @@ import oscar.cp.modeling._
 import scala.collection.immutable.HashSet
 import scala.collection.immutable.Vector
 import cs.kuleuven.util.PotentialRegion
+import cs.kuleuven.util.Solution
 /**
  * Created on December 27, 2013 
  * @author thanhle
@@ -30,12 +31,12 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
 	 */
 	def buildPotentialRegions(cp: CPSolver,
     				rows: IndexedSeq[CPVarBool], 
-    				cols: IndexedSeq[CPVarBool],    				
-    				query: Array[Int]): Set[PotentialRegion] = {
+    				cols: IndexedSeq[CPVarBool]    				
+    				/*query: Array[Int]*/): Set[PotentialRegion] = {
       
-    	for(q <- query) {
-    		cp.post(cols(q) == 1)
-    	}
+    	//for(q <- query) {
+    	//	cp.post(cols(q) == 1)
+    	//}
       
       	val selectedCols =  (0 until cols.size).filter(c => cols(c).getValue == 1)
         val possibleRows =  (0 until rows.size).filter(r => ((rows(r).isBound && rows(r).getValue == 1) ||
@@ -60,11 +61,11 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
       	regionRows.update(index, possibleRows.toSet)
       	regionCols.update(index, selectedCols.toSet)
         
-        while (!allBounds(cols) && !allBounds(rows)) {
+        while (!allBounds(cols) && !allBounds(rows) && !cp.isFailed) {
           var nextCol = mdl.getNextCompressedCol()
                     
           cp.post(cols(nextCol) == 1)
-          val selectedCols2 =  (0 until cols.size).filter(c => cols(c).getValue == 1)
+          val selectedCols2 =  (0 until cols.size).filter(c => cols(c).getValue == 1)           
           val possibleRows2 =  (0 until rows.size).filter(r => ((rows(r).isBound && rows(r).getValue == 1) ||
         													(!rows(r).isBound))).map(x => java.lang.Math.round(x/2))
                 
@@ -74,7 +75,7 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
         	var newMDLScore = mdl.getMDLScore()
         	index = index + 1
         	
-        	println("Next column: " + nextCol + " - nCols = " + selectedCols2.size + " - nRows = " + possibleRows2.size + " - MDLScore: " + newMDLScore)
+        	println(index + " - Next column: " + nextCol + " - nCols = " + selectedCols2.size + " - nRows = " + possibleRows2.size + " - MDLScore: " + newMDLScore)
           
         	scores.update(index, newMDLScore)
         	regionRows.update(index, possibleRows2.toSet)
@@ -138,9 +139,9 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
 	def printRunSummary(regions: Set[PotentialRegion]) = {
 	  val mdlScores = scores.toSeq
 	  val scores2 = mdlScores.filter(s => s > 0)
-	  println("\nSummary results of constructing potential regions:")
-	  println("MDL scores: " + scores2 +"\n")
-	  println(regions.size + " potential regions found: \n ")
+	  println("\nSummary results of constructing potential regions:\n")
+	  println("+ MDL scores: " + scores2 +"\n")
+	  println("+ " + regions.size + " potential regions found: \n ")
 	  var i = 0
 	  for(region <- regions) {
 	    i = i + 1
@@ -195,5 +196,49 @@ class PotentialRegionBuilder(binTdb: DenseMatrix, mulTdb: DenseMatrix) {
 	  return (modelLen + dataLenInside + dataLenOutside).toInt
 	  
 	}
+	
+	/**
+	 * Save potential regions in files
+	 * @param regions set of potential regions that need to be saved 
+	 * @rowsFile filename contains row indexes
+	 * @colFile filename contains col indexes
+	 * @mdlScoreFile filename contains mdl scores of the potential regions
+	 * @indexFile filename contains the indexes in the mdl score list where these regions were found
+	 */
+	
+	def savePotentialRegions(regions: Set[PotentialRegion],
+	    rowsFile: String,
+	    colsFile: String,
+	    mdlScoreFile: String,
+	    indexFile: String,
+	    delimiter: String) = {
+	  
+	  
+	  var first = true
+	  
+	  for (region <- regions) {
+	    val s = new Solution(List("rows", "cols", "mdl", "index"))
+	    s.update("rows", region.getPosRows.toSet)
+	    s.update("cols", region.getPosCols.toSet)
+	    s.update("mdl", scala.collection.immutable.HashSet(region.getMDLScore))
+	    s.update("index", scala.collection.immutable.HashSet(region.getRegionIndex))
+	    
+	    if (first) {
+	      s.saveVar("rows", rowsFile, delimiter, false)
+	      s.saveVar("cols", colsFile, delimiter, false)
+	      s.saveVar("mdl", mdlScoreFile, delimiter, false)
+	      s.saveVar("index", indexFile, delimiter, false)
+	    } else {
+	      s.saveVar("rows", rowsFile, delimiter, false)
+	      s.saveVar("cols", colsFile, delimiter, false)
+	      s.saveVar("mdl", mdlScoreFile, delimiter, false)
+	      s.saveVar("index", indexFile, delimiter, false)
+	    }
+	    
+	  }	  
+	  
+	}
+	
+	
   		
 }
