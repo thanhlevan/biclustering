@@ -64,5 +64,20 @@ class PotentialRegion(posRows: Set[Int],
   }
   
   def getRegionIndex() = posIndex
+  
+  def save(rowFile: String, colFile: String, scoreFile: String, indexFile: String, delimiter: String) = {
+    
+    val s = new Solution(List("rows", "cols", "mdl", "index"))
+	
+    s.update("rows", getPosRows.toSet)
+	s.update("cols", getPosCols.toSet)
+	s.update("mdl", scala.collection.immutable.HashSet(getMDLScore))
+	s.update("index", scala.collection.immutable.HashSet(getRegionIndex))
+	
+	s.saveVar("rows", rowFile, delimiter, false)
+    s.saveVar("cols", colFile, delimiter, false)
+    s.saveVar("mdl", scoreFile, delimiter, false)
+    s.saveVar("index", indexFile, delimiter, false)
+  }
 
 }

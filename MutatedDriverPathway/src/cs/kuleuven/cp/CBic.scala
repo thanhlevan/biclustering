@@ -28,6 +28,8 @@ class CBic (dupFile: String,
 						workingDir: String,
 						rowThreshold: Int,
 						colThreshold: Int,
+						mdlRowThreshold: Int,
+						mdlColThreshold: Int,
 						failureThreshold: Int,
 						restartThreshold: Int//,
 						//iteration: Int
@@ -76,8 +78,8 @@ class CBic (dupFile: String,
 							queryFile,
 							removedRowsFile, //zero-indexed row indexes of rows in multi-valued file
 							workingDir,
-							if (rowThreshold > 20) 20 else rowThreshold,//rowThreshold,
-							if (colThreshold > 20) 20 else colThreshold,//colThreshold,
+							mdlRowThreshold,
+							mdlColThreshold,
 							failureThreshold,
 							restartThreshold,
 							iteration)
@@ -90,12 +92,16 @@ class CBic (dupFile: String,
 		  return s
 		  
 	  } else {
+		  savePotentialRegionResults(regions, workingDir, iteration)
+		  
 		  val solutions = regions.map(region => mineBicInPR(region, removedRowsFile, iteration))
 		  val optSolu	= solutions.toVector.sortBy(s => s.objValue)(Ordering[Integer].reverse).head
 		  
 		  if (optSolu.objValue > 0) {
+			  println("\n\n******************************************************************************************************")
 			  println("\nFinal solution in the iteration " + iteration)
 			  optSolu.print
+			  println("******************************************************************************************************\n\n")
 		  } else {
 			  println("No solution found in the detected potential regions")
 			  println("You might consider to increase the column noise level as well as the thresholds for failures and restarts")
@@ -135,7 +141,7 @@ class CBic (dupFile: String,
    def saveSolution(directory: String, solu: Solution, iterationTh: Int) = {
       
       val delimiter = "\t"
-      //val rowFileName = directory + "dup_rows_" + iterationTh + ".txt"  
+  
       val rowFileName = directory + "rows_" + iterationTh + ".txt"
       val colFileName = directory + "cols_" + iterationTh + ".txt"
                   
@@ -212,5 +218,20 @@ class CBic (dupFile: String,
       val filename = workingDir + prefix + "_" + iteration + ".txt"
       val sol = new DenseMatrix(filename, delimiter)
       (0 until sol.colSize).map(x => sol.at(0,x)).toSet
+    }
+    
+    def savePotentialRegionResults(regions: Set[PotentialRegion], dir: String, iter: Int) = {
+      var i = 1
+      
+      for (region <- regions) {
+    	  val rowFile = dir + "iteration_" + iter + "_pr_" + i + "_rows.txt"
+    	  val colFile = dir + "iteration_" + iter + "_pr_" + i + "_cols.txt"
+    	  val scoFile = dir + "iteration_" + iter + "_pr_" + i + "_score.txt"
+    	  val indFile = dir + "iteration_" + iter + "_pr_" + i + "_index.txt"
+    	  
+    	  region.save(rowFile, colFile, scoFile, indFile, delimiter)
+    	  i = i + 1
+      }
+      
     }
 }
