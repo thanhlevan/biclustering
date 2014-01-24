@@ -254,7 +254,7 @@ class biclusteringMDL(dupFile: String,
 	    
 	  } else {	    
 	    println("No solution found in the potential region! ")
-	    println("You might consider to increase the thresholds of failures and restarts.")
+	    println("You might consider to increase the thresholds of failures/restarts and relax row/col noise thresholds.")
 	    println("Current failure threshold: " + failureThreshold)
 	    println("Current restart threshold: " + restartThreshold)
 	  }

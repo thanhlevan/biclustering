@@ -49,7 +49,7 @@ public class runBiclusteringMDL {
         int colThreshold = 25;
         int rowThreshold = 25;
         int failureThreshold = 300;
-        int restartThreshold = 5;
+        int restartThreshold = 30;
                         
         // parse command line to get values
         CommandLineParser parser = new BasicParser();
@@ -130,14 +130,15 @@ public class runBiclusteringMDL {
         CBic bic = new CBic(binFileName,
 													mulFileName,
 													queryFileName,
-													rmRowsFileName,
+													//rmRowsFileName,
 													workingDir,
 													rowThreshold,
 													colThreshold,
 													failureThreshold,
-													restartThreshold,
-													solutionIndex);	
-        bic.execute();
+													restartThreshold
+													);
+													//solutionIndex);	
+        bic.mineMultiBiclusters();
 		/*biclusteringMDL bin = new biclusteringMDL(binFileName,
 													mulFileName,
 													queryFileName,

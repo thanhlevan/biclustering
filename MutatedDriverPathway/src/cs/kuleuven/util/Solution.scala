@@ -5,12 +5,10 @@ package cs.kuleuven.util
 
 import oscar.cp.core.CPVarBool
 
-//import java.io.PrintWriter
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 
 
 class Solution(names: List[String]) {
@@ -60,7 +58,7 @@ class Solution(names: List[String]) {
         if(values(pos) == null) {
             println(varName + " is null")
         } else {
-        	println( varName + " [" + values(pos).size + "]:" + values(pos).toVector.sorted  )
+        	println( varName + " [" + values(pos).size + "]: " + values(pos).toVector.sorted  )
         }
                 
     }
@@ -77,53 +75,15 @@ class Solution(names: List[String]) {
     }
     
     def toString(varName: String, delimiter: String): String = {
-        val pos = nameMap.get(varName).get
-        //var result: String = ""
+        val pos = nameMap.get(varName).get      
             
         if (values(pos) == null) {
             ""
         } else {
-            /*var i = 0
-            for(v <- values(pos)) {
-                if (i < values(pos).size - 1)
-                	result += v + delimiter
-                else
-                    result += v
-                i +=1
-            }*/
+           
         	val sortedValues = values(pos).toVector.sorted
         	val tabValues = sortedValues.mkString(delimiter)
         	return tabValues
-        }
-    }
-    
-    /**
-     * Convert the results of varName to a string. 
-     * The method toString2(..) differs from toString(..) in the point that
-     * it automatically converts the indexes in the duplicated matrix to the original matrix  
-     */
-    
-    def toString2(varName: String, delimiter: String): String = {
-        val pos = nameMap.get(varName).get
-        var result: String = ""
-            
-        if (values(pos) == null) {
-            ""
-        } else {
-            /*var i = 0
-            val converted = values(pos).map(x => java.lang.Math.round(x/2)).toVector.sorted
-            for(v <- converted) {
-                if (i < converted.size - 1)
-                	result += v + delimiter
-                else
-                    result += v
-                i +=1
-            }
-            return result*/
-        	val sortedValues = values(pos).toVector.sorted
-        	val originalIndexes = sortedValues.map(x => java.lang.Math.round(x/2))
-        	val result = originalIndexes.mkString(delimiter)
-        	return result
         }
     }
     
@@ -146,31 +106,6 @@ class Solution(names: List[String]) {
             case ioe: IOException => throw new Exception(ioe.getMessage())        
         }       
     }
-    
-    
-    /**
-     * Save the result of varName in a file and   
-     * automatically converts the indexes in the duplicated matrix to the original matrix 
-     */
-   /* def saveVar2(varName: String, filename: String, delimiter: String, append: Boolean) = {
-        
-        var dos: DataOutputStream = null
-        try {
-        	var outFile = new File(filename);
-        	if (append) {
-        		dos = new DataOutputStream(new FileOutputStream(filename, true));
-        	} else {
-        		dos = new DataOutputStream(new FileOutputStream(outFile));
-        	}
-        	
-        	val varValue = toString2(varName, delimiter)
-        	dos.writeBytes(varValue);
-        	dos.writeBytes("\n")
-        	dos.close();
-        } catch {
-            case ioe: IOException => throw new Exception(ioe.getMessage())        
-        }       
-    }*/
     
     
 }

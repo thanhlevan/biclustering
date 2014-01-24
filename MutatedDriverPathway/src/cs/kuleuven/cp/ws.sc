@@ -9,6 +9,7 @@ import cs.kuleuven.java.mdl._
 import cs.kuleuven.matrix._
 import java.lang.Math._
 import breeze.stats.distributions._
+import cs.kuleuven.cp._
 
 object ws {
 
@@ -183,11 +184,27 @@ topK.print()
 	//val den = Vector(0.6, 0.2, 0.8, 0.1, 0.9)
 	
 	//val sortedV = (0 until v.size).sortBy(c => den(c))(Ordering[Double].reverse)
-	val s1 = scala.collection.immutable.HashSet(1, 2, 3)
-                                                  //> s1  : scala.collection.immutable.HashSet[Int] = Set(1, 2, 3)
-	val s2 = scala.collection.immutable.HashSet(1, 4, 6)
-                                                  //> s2  : scala.collection.immutable.HashSet[Int] = Set(1, 6, 4)
-	val s3 = s2 &~ s1                         //> s3  : scala.collection.immutable.HashSet[Int] = Set(6, 4)
-	
- 
+	//val s1 = scala.collection.immutable.HashSet(1, 2, 3)
+	//val s2 = scala.collection.immutable.HashSet(1, 4, 6)
+	//val s3 = s2 &~ s1
+							
+  //val sol = cbic.readSolution("/home/thanh/test/breast/noise_20/", 2, "rows", "\t") //delimiter: String
+  val workingDir = "/home/thanh/test/breast/noise_20/"
+                                                  //> workingDir  : String = /home/thanh/test/breast/noise_20/
+  val prefix = "rows"                             //> prefix  : String = rows
+  val iteration = 2                               //> iteration  : Int = 2
+  val delimiter = "\t"                            //> delimiter  : String = "	"
+  val filename = workingDir + prefix + "_" + iteration + ".txt"
+                                                  //> filename  : String = /home/thanh/test/breast/noise_20/rows_2.txt
+  val sol = new DenseMatrix(filename, delimiter)  //> sol  : cs.kuleuven.matrix.DenseMatrix = cs.kuleuven.matrix.DenseMatrix@1963
+                                                  //| 2847
+  val s =  (0 until sol.colSize).map(x => sol.at(0,x)).toSet
+                                                  //> s  : scala.collection.immutable.Set[Int] = Set(1586, 1718, 909, 518, 1110, 
+                                                  //| 120, 1269, 1305, 384, 1327, 913, 404, 1792, 587, 619, 838, 189, 228, 179, 1
+                                                  //| 373, 1109, 376, 348, 353, 766, 634, 307, 85, 201, 714, 1723, 746, 1255, 137
+                                                  //| , 1560, 467, 1143, 615, 169, 706, 1776, 1249, 738, 1131, 1599, 1525, 508, 1
+                                                  //| 563, 1483, 1301, 180, 176, 54, 572, 1464, 172, 1408, 964, 1293, 1340, 282, 
+                                                  //| 370, 840, 1670, 314, 1476, 55, 1822, 1077, 999, 1229, 437, 767, 796, 987, 1
+                                                  //| 019, 62, 369, 111, 803)
+
 }

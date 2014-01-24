@@ -9,8 +9,9 @@ import cs.kuleuven.java.mdl._
 import cs.kuleuven.matrix._
 import java.lang.Math._
 import breeze.stats.distributions._
+import cs.kuleuven.cp._
 
-object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; def main(args: Array[String])=$execute{;$skip(1356); 
+object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; def main(args: Array[String])=$execute{;$skip(1380); 
 
 	//val filename = "/home/thbreezeanh/Rlib/MutDriverPathways/Generators/graph_adjacency.txt"
 	//val g: UndirectedGraph = new UndirectedGraph(filename,"\t")
@@ -57,7 +58,7 @@ object ws {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; de
  val c = (0.7*21).toInt
  //g.getConnectedComponent(s1.head,s2)
  */
- val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(3785); 
+ val cp = CPSolver();System.out.println("""cp  : oscar.cp.modeling.CPSolver = """ + $show(cp ));$skip(4033); 
  /*val w = Array(1, 1, -1)
  val y = (0 until 3).map(i => CPVarBool(cp))
         
@@ -182,9 +183,17 @@ topK.print()
 	//val den = Vector(0.6, 0.2, 0.8, 0.1, 0.9)
 	
 	//val sortedV = (0 until v.size).sortBy(c => den(c))(Ordering[Double].reverse)
-	val s1 = scala.collection.immutable.HashSet(1, 2, 3);System.out.println("""s1  : scala.collection.immutable.HashSet[Int] = """ + $show(s1 ));$skip(54); 
-	val s2 = scala.collection.immutable.HashSet(1, 4, 6);System.out.println("""s2  : scala.collection.immutable.HashSet[Int] = """ + $show(s2 ));$skip(19); 
-	val s3 = s2 &~ s1;System.out.println("""s3  : scala.collection.immutable.HashSet[Int] = """ + $show(s3 ))}
-	
- 
+	//val s1 = scala.collection.immutable.HashSet(1, 2, 3)
+	//val s2 = scala.collection.immutable.HashSet(1, 4, 6)
+	//val s3 = s2 &~ s1
+							
+  //val sol = cbic.readSolution("/home/thanh/test/breast/noise_20/", 2, "rows", "\t") //delimiter: String
+  val workingDir = "/home/thanh/test/breast/noise_20/";System.out.println("""workingDir  : String = """ + $show(workingDir ));$skip(22); 
+  val prefix = "rows";System.out.println("""prefix  : String = """ + $show(prefix ));$skip(20); 
+  val iteration = 2;System.out.println("""iteration  : Int = """ + $show(iteration ));$skip(23); 
+  val delimiter = "\t";System.out.println("""delimiter  : String = """ + $show(delimiter ));$skip(64); 
+  val filename = workingDir + prefix + "_" + iteration + ".txt";System.out.println("""filename  : String = """ + $show(filename ));$skip(49); 
+  val sol = new DenseMatrix(filename, delimiter);System.out.println("""sol  : cs.kuleuven.matrix.DenseMatrix = """ + $show(sol ));$skip(61); 
+  val s =  (0 until sol.colSize).map(x => sol.at(0,x)).toSet;System.out.println("""s  : scala.collection.immutable.Set[Int] = """ + $show(s ))}
+
 }

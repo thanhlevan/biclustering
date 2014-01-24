@@ -51,6 +51,7 @@ object biclusteringLNS extends App {
 	      val cWeight = (0 until nR).map(r => (100*dupMatrix.at(r,c) + colThreshold - 100))
 	      val aux = new CPVarBool(cp)
 	      val colNoiseConstraint = new IntWSum(cWeight, varRows, 0, aux)
+	      cp.add(colNoiseConstraint)
 	      cp.post(varCols(c) ==> aux)
 	    }
 	  }exploration{

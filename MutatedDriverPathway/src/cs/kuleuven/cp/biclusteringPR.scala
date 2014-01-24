@@ -83,7 +83,8 @@ class biclusteringPR(dupFile: String,
 	  val topK = new TopKSolutions(1)
 	  val names = List("rows", "cols")
 		  
-	  
+	  //Randomizer
+	  val rand = new scala.util.Random(0)
 	  
 	  //optimization criterion
 	  val biclusterArea = sum((0 until nR).map(r => varRows(r))) * sum((0 until nC).map(c => varCols(c)))
@@ -127,56 +128,47 @@ class biclusteringPR(dupFile: String,
 	  } exploration {
 	  
 	    cp.binaryFirstFail(varCols )
-	    /*while(!allBounds(varCols) ) {
-	      
-	      val unBoundedCols = (0 until varCols.length).filter(c => !varCols(c).isBound)
-	      val unBoundedRows = Rows.filter(r => !varRows(r).isBound || (varRows(r).isBound && varRows(r).getValue == 1))
-	      
-	      if (unBoundedRows.size >= region.getPosRows.size) {
-	    	  val sortedDenCols = unBoundedCols.toVector.sortBy(col => region.getColDensity(col))(Ordering[Double].reverse)
-		      val c = sortedDenCols.head
-		  
-		      val sampledValue = (new Bernoulli(region.getColDensity(c))).sample
-		      val lhsValue = if (sampledValue == true) 1 else 0
-		      val rhsValue = if (sampledValue == true) 0 else 1
-		      println("From PR - next col: " + c + " - " + region.getColDensity(c) + " - sampledValue = " + sampledValue + " - nPossibleRows = " + unBoundedRows.size)		  
-		      cp.branch {cp.post(varCols(c) == lhsValue)} {cp.post(varCols(c) == rhsValue)}
-	      } else {
-	        val convertedRows = unBoundedRows.map(r => java.lang.Math.round(r/2))
-	        val colDens = unBoundedCols.map(c => getColDensityInRows(c, convertedRows, mulMatrix))
-	        val sortedDenCols = (0 until unBoundedCols.size).sortBy(col => colDens(col))(Ordering[Double].reverse)
-	        val c = unBoundedCols(sortedDenCols.head)
-	        val den = colDens(sortedDenCols.head)
 		    
-	        val lhsValue = if (den*100 >= (100 - 0.9*colThreshold)) 1 else 0
-		    val rhsValue = if (den*100 >= (100 - 0.9*colThreshold)) 0 else 1
-		    println("next col: " + c + " - " + den + " - lhsValue = " + lhsValue + " - nPossibleRows = " + unBoundedRows.size)//sampledValue = " + sampledValue)
-		    cp.branch {cp.post(varCols(c) == lhsValue)} {cp.post(varCols(c) == rhsValue)}
-	      }
-	    }*/
-	    
 	    bSolutionFound = true
 	    println("\nSolution found:")
 	    printSolution(varRows, varCols)
 	    Rows.foreach(r => bestRows(r) = varRows(r).value)
-		Cols.foreach(c => bestCols(c) = varCols(c).value)
-		
+		Cols.foreach(c => bestCols(c) = varCols(c).value)		
 	    
 	  } run (failureLimit = failureThreshold)
 	  
-	  val s = new Solution(List("rows", "cols"))
-	  s.update("rows", Rows.filter(r => bestRows(r) == 1).toSet)
-	  s.update("cols", Cols.filter(c => bestCols(c) == 1).toSet)
+	  // Large Neighborhood Search	 
+	  val colRangeLimit = (0.8*nC).toInt
+	  for (r <- 1 to restartThreshold) {
+	    
+		  println("\nLNS " + r)
+		  cp.runSubjectTo(failureLimit = failureThreshold) {
+		    
+		    val selectedCols = Cols.filter(c => bestCols(c) == 1)
+		    //println("accept previous solution: " + selectedCols)
+		    
+		    for (c <- selectedCols) {
+		      cp.post(varCols(c) == 1)
+		    }
+		    
+			for(c <- consideredCols.filter(c => !selectedCols.contains(c))){
+				if(rand.nextInt(nC) < colRangeLimit)
+			      cp.post(varCols(c) == bestCols(c))
+			}
+		  }
+	  }
+	  
+	  // return the final solution
+	  val s = new Solution(List("cols", "rows"))
+	  val selRows = Rows.filter(r => bestRows(r) == 1).map(r => java.lang.Math.round(r/2)).toSet
+	  val selCols = Cols.filter(c => bestCols(c) == 1).toSet
+	  s.update("cols", selCols )
+	  s.update("rows", selRows)
+	  s.setObjValue(selRows.size * selCols.size)
 	  
 	  return s
   }	  
-	  
-   
-  	def restart(cp: CPSolver) = {
-  	  cp.startSubjectTo(failureLimit = 1) {
-  	    cp.fail
-  	  }
-  	}
+	
   	
   	def getColDensityInRows(col: Int, rows: IndexedSeq[Int], mulTdb: DenseMatrix): Double = {
 	    val nonzeroValues = (rows).filter(r => mulTdb.at(r, col) != 0)
@@ -192,72 +184,5 @@ class biclusteringPR(dupFile: String,
 	    println("Rows " + " [" + originalRows.size + "/" + rows.size + "]: " + originalRows.sorted )	    
 	}
         
-    def saveSolution(directory: String, solu: Solution, iterationTh: Int) = {
-      
-      val delimiter = "\t"
-      val rowFileName = directory + "dup_rows_" + iterationTh + ".txt"  
-      val rowFileName2 = directory + "rows_" + iterationTh + ".txt"
-      val colFileName = directory + "cols_" + iterationTh + ".txt"
-                  
-      solu.saveVar("rows", rowFileName, delimiter, false)
-      solu.saveVar("cols", colFileName, delimiter, false)
-      
-      // convert to the original indexes
-      val solu2 = new Solution(List("rows", "cols"))
-      val rows2 = solu.getVarValue("rows").map(r => java.lang.Math.round(r/2)).toSet
-      solu2.update("rows", rows2)
-      solu2.saveVar("rows", rowFileName2, delimiter, false)
-      
-      //
-      val rmRowsFileName = directory + "removedRows.txt"
-      val fileHandler = new java.io.File(rmRowsFileName)
-	  if (!fileHandler.exists()) {
-	      solu2.saveVar("rows", rmRowsFileName, delimiter, false)
-	  } else {
-		  val reader = new DenseMatrix(rmRowsFileName, delimiter)
-		  val prevResult = (0 until reader.colSize).map(c => reader.at(0, c)).toSet		  
-		  //val curResult = (0 until rows.size).filter(r => rows(r).getValue == 1).map(r => java.lang.Math.round(r/2)).toSet
-		  var curResult = solu.getVarValue("rows").map(r => java.lang.Math.round(r/2))
-		  val uniResult = prevResult union curResult
-		  val writer = new java.io.PrintWriter(new java.io.File(rmRowsFileName))
-		  uniResult.toVector.sorted.foreach(f => writer.write(f.toString + "\t"))	
-		  writer.close()
-	  }
-    }
-    
-    def isSolutionFound() = bSolutionFound
-    
-    def bContinue(iteration: Int, 
-    			workingDir: String,
-    			pRegionBuilder: PotentialRegionBuilder,
-    			curSolRows: IndexedSeq[CPVarBool], 
-    			curSolCols: IndexedSeq[CPVarBool]): Boolean = {
-      // row indexes saved in solution file are converted to the original values
-      // which are 
-      val rowSets = (1 until iteration).toVector.map(iter => readSolution(workingDir, iter, "rows", delimiter))
-      val colSets = (1 until iteration).toVector.map(iter => readSolution(workingDir, iter, "cols", delimiter))
-      
-      val prevMDL = pRegionBuilder.getMDLOfNonOverlappingBiclusters(rowSets, colSets)
-      
-      // current row indexes -> indexes in multi-valued dataset 
-      val curRows = (0 until curSolRows.size).filter(r => curSolRows(r).getValue == 1).map(r => java.lang.Math.round(r/2)).toSet
-      val curCols = (0 until curSolCols.size).filter(c => curSolCols(c).getValue == 1).toSet
-      val newRowSets = rowSets ++ Vector(curRows)
-      val newColSets = colSets ++ Vector(curCols)
-      
-      val curMDL = pRegionBuilder.getMDLOfNonOverlappingBiclusters(newRowSets, newColSets)
-      
-      if(curMDL < prevMDL) true else false
-      
-    }
-    
-    def readSolution(workingDir: String,
-    			iteration: Int,
-    			prefix: String, 
-    			delimiter: String): Set[Int] = {
-     
-      val filename = workingDir + prefix + "_" + iteration + ".txt"
-      val sol = new DenseMatrix(filename, delimiter)
-      (0 until sol.colSize).map(x => sol.at(0,x)).toSet
-    }
+   
 }
