@@ -127,7 +127,7 @@ public class runBiclusteringMDL {
         	return;
         }
         int solutionIndex = 1;
-        CBic bic = new CBic(binFileName,
+        /*CBic bic = new CBic(binFileName,
 													mulFileName,
 													queryFileName,
 													//rmRowsFileName,
@@ -138,7 +138,7 @@ public class runBiclusteringMDL {
 													restartThreshold
 													);
 													//solutionIndex);	
-        bic.mineMultiBiclusters();
+        bic.mineMultiBiclusters();*/
 		/*biclusteringMDL bin = new biclusteringMDL(binFileName,
 													mulFileName,
 													queryFileName,
